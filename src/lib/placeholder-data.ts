@@ -1,6 +1,6 @@
 
 import type { CourseModule, Resource } from '@/types';
-import { FileText, Link as LinkIcon, Video, CheckSquare, BarChart2, CalendarDays, GanttChartSquare, Rows3, Calculator, ClipboardCheck, Table2, FileSpreadsheet } from 'lucide-react'; // Added Calculator, ClipboardCheck, Table2, FileSpreadsheet, LinkIcon
+// Removed Lucide icon imports for resources, they will be handled in the client component
 
 export const placeholderModules: CourseModule[] = [
   {
@@ -57,7 +57,7 @@ export const placeholderResources: Resource[] = [
     title: 'Payroll Compliance Checklist',
     type: 'checklist',
     url: '#',
-    icon: CheckSquare,
+    iconName: 'CheckSquare',
     description: 'A comprehensive checklist for ensuring payroll compliance.',
     moduleAffiliation: 'module3',
     tags: ['compliance', 'checklist'],
@@ -65,9 +65,9 @@ export const placeholderResources: Resource[] = [
   {
     id: 'res2',
     title: 'Federal Tax Calculator Guide',
-    type: 'calculator', // Changed from 'link' to 'calculator' for consistency
+    type: 'calculator',
     url: '#',
-    icon: Calculator, // Changed to Calculator icon
+    iconName: 'Calculator',
     description: 'Guide to using federal tax calculators effectively.',
     moduleAffiliation: 'module3',
     tags: ['taxation', 'calculator'],
@@ -77,7 +77,7 @@ export const placeholderResources: Resource[] = [
     title: 'Benefits Enrollment Process Video',
     type: 'video',
     url: '#',
-    icon: Video,
+    iconName: 'Video',
     description: 'A video walkthrough of the benefits enrollment process.',
     moduleAffiliation: 'module4',
     tags: ['benefits', 'video'],
@@ -85,9 +85,9 @@ export const placeholderResources: Resource[] = [
   {
     id: 'res4',
     title: 'Year-End Reporting Timeline Template',
-    type: 'timeline', // This type was fine
+    type: 'timeline',
     url: '#',
-    icon: GanttChartSquare, // This icon was fine
+    iconName: 'GanttChartSquare',
     description: 'A template for planning year-end reporting activities.',
     moduleAffiliation: 'module5',
     tags: ['reporting', 'template', 'timeline'],
@@ -97,7 +97,7 @@ export const placeholderResources: Resource[] = [
     title: 'External Payroll Resources (IRS)',
     type: 'link',
     url: 'https://www.irs.gov',
-    icon: LinkIcon, // Use imported LinkIcon
+    iconName: 'Link', 
     description: 'Link to official IRS website for payroll professionals.',
     tags: ['external', 'irs', 'link'],
   },
@@ -106,7 +106,7 @@ export const placeholderResources: Resource[] = [
     title: 'Employee Information Management PDF',
     type: 'pdf',
     url: '#',
-    icon: FileText,
+    iconName: 'FileText',
     description: 'Detailed PDF on managing employee information securely.',
     moduleAffiliation: 'module1',
     tags: ['employee data', 'pdf'],
@@ -116,18 +116,17 @@ export const placeholderResources: Resource[] = [
     title: 'Vendor Comparison Matrix (Old)',
     type: 'matrix',
     url: '#',
-    icon: Rows3, // Existing icon for matrix
+    iconName: 'Rows3',
     description: 'Interactive matrix to compare payroll software vendors.',
     moduleAffiliation: 'module2',
     tags: ['software', 'vendor', 'matrix'],
   },
-  // New resources based on user request
   {
     id: 'res8',
     title: 'Tax Calculation Worksheets',
-    type: 'template', // Categorizing as a template
-    url: '#download-tax-worksheets', // Placeholder URL
-    icon: FileSpreadsheet, // Icon for spreadsheets/worksheets
+    type: 'template', 
+    url: '#download-tax-worksheets',
+    iconName: 'FileSpreadsheet', 
     description: 'Downloadable worksheets for various tax calculations.',
     moduleAffiliation: 'module3',
     tags: ['taxation', 'worksheet', 'template'],
@@ -136,8 +135,8 @@ export const placeholderResources: Resource[] = [
     id: 'res9',
     title: 'Audit Templates Pack',
     type: 'template',
-    url: '#download-audit-templates', // Placeholder URL
-    icon: ClipboardCheck, // Icon for checklists/audit related
+    url: '#download-audit-templates',
+    iconName: 'ClipboardCheck',
     description: 'A collection of templates for payroll audits.',
     moduleAffiliation: 'module5',
     tags: ['audit', 'template', 'reporting'],
@@ -146,8 +145,8 @@ export const placeholderResources: Resource[] = [
     id: 'res10',
     title: 'Software Evaluation Matrix',
     type: 'matrix',
-    url: '#view-software-matrix', // Placeholder URL
-    icon: Table2, // Icon suitable for matrices or tables
+    url: '#view-software-matrix',
+    iconName: 'Table2',
     description: 'A structured matrix for evaluating payroll software features.',
     moduleAffiliation: 'module2',
     tags: ['software', 'evaluation', 'matrix'],

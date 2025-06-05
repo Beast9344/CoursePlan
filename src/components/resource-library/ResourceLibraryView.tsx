@@ -1,3 +1,4 @@
+
 'use client';
 
 import type { Resource } from '@/types';
@@ -6,12 +7,45 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter }
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Download, ExternalLink, Filter, Search, Library, ListCollapse } from 'lucide-react';
-import Link from 'next/link';
+import { 
+  Download, 
+  ExternalLink, 
+  Filter, 
+  Search, 
+  Library, 
+  ListCollapse,
+  FileText,
+  Link as LinkIcon, // Renamed to avoid conflict with NextLink
+  Video,
+  CheckSquare,
+  Calculator,
+  GanttChartSquare,
+  Rows3,
+  ClipboardCheck,
+  Table2,
+  FileSpreadsheet
+} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
+import NextLink from 'next/link'; // Using NextLink for clarity
 
 interface ResourceLibraryViewProps {
   resources: Resource[];
 }
+
+const iconMap: { [key: string]: LucideIcon } = {
+  FileText,
+  Link: LinkIcon,
+  Video,
+  CheckSquare,
+  Calculator,
+  GanttChartSquare,
+  Rows3,
+  ClipboardCheck,
+  Table2,
+  FileSpreadsheet,
+  Download, // Default download icon if specific not found
+  ExternalLink, // Default external link icon
+};
 
 const resourceTypeDisplayNames: Record<Resource['type'], string> = {
   pdf: 'PDF Document',
@@ -24,6 +58,7 @@ const resourceTypeDisplayNames: Record<Resource['type'], string> = {
   calculator: 'Calculator',
   timeline: 'Timeline',
   matrix: 'Comparison Matrix',
+  worksheet: 'Worksheet', // Added worksheet
 };
 
 export function ResourceLibraryView({ resources: initialResources }: ResourceLibraryViewProps) {
@@ -82,29 +117,35 @@ export function ResourceLibraryView({ resources: initialResources }: ResourceLib
 
       {filteredResources.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredResources.map((resource) => (
-            <Card key={resource.id} className="flex flex-col justify-between shadow-md hover:shadow-lg transition-shadow duration-200">
-              <CardHeader>
-                <div className="flex items-center mb-2">
-                  {resource.icon && <resource.icon className="h-6 w-6 mr-3 text-primary" />}
-                  <CardTitle className="font-headline text-lg">{resource.title}</CardTitle>
-                </div>
-                <Badge variant="outline" className="w-fit">{resourceTypeDisplayNames[resource.type] || resource.type}</Badge>
-              </CardHeader>
-              <CardContent className="flex-grow">
-                {resource.description && <p className="text-sm text-muted-foreground mb-2">{resource.description}</p>}
-                {resource.moduleAffiliation && <p className="text-xs text-muted-foreground">Related to: <Badge variant="secondary">{resource.moduleAffiliation}</Badge></p>}
-              </CardContent>
-              <CardFooter>
-                <Button asChild variant="default" size="sm" className="w-full">
-                  <Link href={resource.url} target={resource.type === 'link' ? '_blank' : '_self'} rel={resource.type === 'link' ? 'noopener noreferrer' : undefined}>
-                    {resource.type === 'link' || resource.type === 'video' ? <ExternalLink className="mr-2 h-4 w-4" /> : <Download className="mr-2 h-4 w-4" />}
-                    {resource.type === 'link' ? 'Open Link' : resource.type === 'video' ? 'Watch Video' : 'Download'}
-                  </Link>
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
+          {filteredResources.map((resource) => {
+            const IconComponent = resource.iconName ? iconMap[resource.iconName] : null;
+            const ActionIcon = resource.type === 'link' || resource.type === 'video' ? iconMap['ExternalLink'] : iconMap['Download'];
+            const actionText = resource.type === 'link' ? 'Open Link' : resource.type === 'video' ? 'Watch Video' : 'Download';
+
+            return (
+              <Card key={resource.id} className="flex flex-col justify-between shadow-md hover:shadow-lg transition-shadow duration-200">
+                <CardHeader>
+                  <div className="flex items-center mb-2">
+                    {IconComponent && <IconComponent className="h-6 w-6 mr-3 text-primary" />}
+                    <CardTitle className="font-headline text-lg">{resource.title}</CardTitle>
+                  </div>
+                  <Badge variant="outline" className="w-fit">{resourceTypeDisplayNames[resource.type] || resource.type}</Badge>
+                </CardHeader>
+                <CardContent className="flex-grow">
+                  {resource.description && <p className="text-sm text-muted-foreground mb-2">{resource.description}</p>}
+                  {resource.moduleAffiliation && <p className="text-xs text-muted-foreground">Related to: <Badge variant="secondary">{resource.moduleAffiliation}</Badge></p>}
+                </CardContent>
+                <CardFooter>
+                  <Button asChild variant="default" size="sm" className="w-full">
+                    <NextLink href={resource.url} target={resource.type === 'link' ? '_blank' : '_self'} rel={resource.type === 'link' ? 'noopener noreferrer' : undefined}>
+                      {ActionIcon && <ActionIcon className="mr-2 h-4 w-4" />}
+                      {actionText}
+                    </NextLink>
+                  </Button>
+                </CardFooter>
+              </Card>
+            );
+          })}
         </div>
       ) : (
         <Card>

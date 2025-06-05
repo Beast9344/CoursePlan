@@ -24,7 +24,7 @@ export interface Resource {
   description?: string;
   type: ResourceType;
   url: string;
-  icon?: LucideIcon; // Lucide icon component
+  iconName?: string; // Changed from icon: LucideIcon to iconName: string
   tags?: string[]; // For filtering
   moduleAffiliation?: string; // Which module this resource belongs to
 }
