@@ -1,5 +1,6 @@
+
 import type { CourseModule, Resource } from '@/types';
-import { FileText, Link, Video, CheckSquare, BarChart2, CalendarDays, GanttChartSquare, Rows3 } from 'lucide-react';
+import { FileText, Link as LinkIcon, Video, CheckSquare, BarChart2, CalendarDays, GanttChartSquare, Rows3, Calculator, ClipboardCheck, Table2, FileSpreadsheet } from 'lucide-react'; // Added Calculator, ClipboardCheck, Table2, FileSpreadsheet, LinkIcon
 
 export const placeholderModules: CourseModule[] = [
   {
@@ -64,9 +65,9 @@ export const placeholderResources: Resource[] = [
   {
     id: 'res2',
     title: 'Federal Tax Calculator Guide',
-    type: 'calculator',
+    type: 'calculator', // Changed from 'link' to 'calculator' for consistency
     url: '#',
-    icon: BarChart2, // Using BarChart2 as a proxy for calculator
+    icon: Calculator, // Changed to Calculator icon
     description: 'Guide to using federal tax calculators effectively.',
     moduleAffiliation: 'module3',
     tags: ['taxation', 'calculator'],
@@ -84,21 +85,21 @@ export const placeholderResources: Resource[] = [
   {
     id: 'res4',
     title: 'Year-End Reporting Timeline Template',
-    type: 'timeline',
+    type: 'timeline', // This type was fine
     url: '#',
-    icon: GanttChartSquare,
+    icon: GanttChartSquare, // This icon was fine
     description: 'A template for planning year-end reporting activities.',
     moduleAffiliation: 'module5',
     tags: ['reporting', 'template', 'timeline'],
   },
   {
     id: 'res5',
-    title: 'External Payroll Resources',
+    title: 'External Payroll Resources (IRS)',
     type: 'link',
     url: 'https://www.irs.gov',
-    icon: Link,
+    icon: LinkIcon, // Use imported LinkIcon
     description: 'Link to official IRS website for payroll professionals.',
-    tags: ['external', 'irs'],
+    tags: ['external', 'irs', 'link'],
   },
    {
     id: 'res6',
@@ -112,12 +113,43 @@ export const placeholderResources: Resource[] = [
   },
   {
     id: 'res7',
-    title: 'Vendor Comparison Matrix',
+    title: 'Vendor Comparison Matrix (Old)',
     type: 'matrix',
     url: '#',
-    icon: Rows3,
+    icon: Rows3, // Existing icon for matrix
     description: 'Interactive matrix to compare payroll software vendors.',
     moduleAffiliation: 'module2',
     tags: ['software', 'vendor', 'matrix'],
+  },
+  // New resources based on user request
+  {
+    id: 'res8',
+    title: 'Tax Calculation Worksheets',
+    type: 'template', // Categorizing as a template
+    url: '#download-tax-worksheets', // Placeholder URL
+    icon: FileSpreadsheet, // Icon for spreadsheets/worksheets
+    description: 'Downloadable worksheets for various tax calculations.',
+    moduleAffiliation: 'module3',
+    tags: ['taxation', 'worksheet', 'template'],
+  },
+  {
+    id: 'res9',
+    title: 'Audit Templates Pack',
+    type: 'template',
+    url: '#download-audit-templates', // Placeholder URL
+    icon: ClipboardCheck, // Icon for checklists/audit related
+    description: 'A collection of templates for payroll audits.',
+    moduleAffiliation: 'module5',
+    tags: ['audit', 'template', 'reporting'],
+  },
+  {
+    id: 'res10',
+    title: 'Software Evaluation Matrix',
+    type: 'matrix',
+    url: '#view-software-matrix', // Placeholder URL
+    icon: Table2, // Icon suitable for matrices or tables
+    description: 'A structured matrix for evaluating payroll software features.',
+    moduleAffiliation: 'module2',
+    tags: ['software', 'evaluation', 'matrix'],
   },
 ];
