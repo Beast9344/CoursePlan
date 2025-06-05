@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter }
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge'; // Added import
+import { Badge } from '@/components/ui/badge';
 import { 
   Download, 
   ExternalLink, 
@@ -134,7 +134,12 @@ export function ResourceLibraryView({ resources: initialResources }: ResourceLib
                 </CardHeader>
                 <CardContent className="flex-grow">
                   {resource.description && <p className="text-sm text-muted-foreground mb-2">{resource.description}</p>}
-                  {resource.moduleAffiliation && <p className="text-xs text-muted-foreground">Related to: <Badge variant="secondary">{resource.moduleAffiliation}</Badge></p>}
+                  {resource.moduleAffiliation && (
+                    <div className="text-xs text-muted-foreground">
+                      <span>Related to: </span>
+                      <Badge variant="secondary">{resource.moduleAffiliation}</Badge>
+                    </div>
+                  )}
                 </CardContent>
                 <CardFooter>
                   <Button asChild variant="default" size="sm" className="w-full">
