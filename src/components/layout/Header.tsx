@@ -15,6 +15,8 @@ function getPageTitle(pathname: string): string {
       return 'Module Summarizer';
     case '/resource-library':
       return 'Resource Library';
+    case '/profile': // Added case for profile page
+      return 'User Profile';
     default:
       if (pathname.startsWith('/module/')) {
         const moduleId = pathname.split('/').pop();

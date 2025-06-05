@@ -17,6 +17,7 @@ import {
   Settings,
   LifeBuoy,
   BotMessageSquare,
+  UserCircle, // Added UserCircle
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -25,6 +26,7 @@ const navItems = [
   { href: '/course-map', label: 'Course Map', icon: Network, tooltip: 'Interactive Course Map' },
   { href: '/module-summarizer', label: 'Summarizer', icon: BookText, tooltip: 'AI Module Summarizer' },
   { href: '/resource-library', label: 'Resources', icon: Library, tooltip: 'Resource Library' },
+  { href: '/profile', label: 'Profile', icon: UserCircle, tooltip: 'User Profile' }, // Added Profile link
 ];
 
 export function SidebarNav() {
