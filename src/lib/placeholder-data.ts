@@ -1,6 +1,5 @@
 
 import type { CourseModule, Resource } from '@/types';
-// Removed Lucide icon imports for resources, they will be handled in the client component
 
 export const placeholderModules: CourseModule[] = [
   {
@@ -97,7 +96,7 @@ export const placeholderResources: Resource[] = [
     title: 'External Payroll Resources (IRS)',
     type: 'link',
     url: 'https://www.irs.gov',
-    iconName: 'Link', 
+    iconName: 'Link',
     description: 'Link to official IRS website for payroll professionals.',
     tags: ['external', 'irs', 'link'],
   },
@@ -124,9 +123,9 @@ export const placeholderResources: Resource[] = [
   {
     id: 'res8',
     title: 'Tax Calculation Worksheets',
-    type: 'template', 
+    type: 'worksheet',
     url: '#download-tax-worksheets',
-    iconName: 'FileSpreadsheet', 
+    iconName: 'FileSpreadsheet',
     description: 'Downloadable worksheets for various tax calculations.',
     moduleAffiliation: 'module3',
     tags: ['taxation', 'worksheet', 'template'],
