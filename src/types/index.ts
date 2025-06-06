@@ -15,8 +15,21 @@ export interface CourseModule {
   scormUrl?: string;
 }
 
-// Added 'worksheet' to ResourceType, though many can be 'template'
-export type ResourceType = 'pdf' | 'link' | 'video' | 'document' | 'template' | 'checklist' | 'diagram' | 'calculator' | 'timeline' | 'matrix' | 'worksheet';
+// Added 'interactive-scenario' and 'simulation' to ResourceType
+export type ResourceType = 
+  | 'pdf' 
+  | 'link' 
+  | 'video' 
+  | 'document' 
+  | 'template' 
+  | 'checklist' 
+  | 'diagram' 
+  | 'calculator' 
+  | 'timeline' 
+  | 'matrix' 
+  | 'worksheet'
+  | 'interactive-scenario'
+  | 'simulation';
 
 export interface Resource {
   id: string;
@@ -24,7 +37,8 @@ export interface Resource {
   description?: string;
   type: ResourceType;
   url: string;
-  iconName?: string; // Changed from icon: LucideIcon to iconName: string
-  tags?: string[]; // For filtering
-  moduleAffiliation?: string; // Which module this resource belongs to
+  iconName?: string; 
+  tags?: string[]; 
+  moduleAffiliation?: string; 
 }
+

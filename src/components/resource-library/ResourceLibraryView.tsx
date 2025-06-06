@@ -16,7 +16,7 @@ import {
   Library, 
   ListCollapse,
   FileText,
-  Link as LinkIcon, // Renamed to avoid conflict with NextLink
+  Link as LinkIcon, 
   Video,
   CheckSquare,
   Calculator,
@@ -24,10 +24,15 @@ import {
   Rows3,
   ClipboardCheck,
   Table2,
-  FileSpreadsheet
+  FileSpreadsheet,
+  MousePointerClick, // Added for interactive-scenario
+  PlaySquare,       // Added for simulation
+  HelpCircle,       // For quizzes/knowledge checks (link type)
+  Map,              // For state resources
+  ShieldCheck       // For ethics
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-import NextLink from 'next/link'; // Using NextLink for clarity
+import NextLink from 'next/link'; 
 
 interface ResourceLibraryViewProps {
   resources: Resource[];
@@ -44,22 +49,29 @@ const iconMap: { [key: string]: LucideIcon } = {
   ClipboardCheck,
   Table2,
   FileSpreadsheet,
-  Download, // Default download icon if specific not found
-  ExternalLink, // Default external link icon
+  MousePointerClick,
+  PlaySquare,
+  HelpCircle,
+  Map,
+  ShieldCheck,
+  Download, 
+  ExternalLink, 
 };
 
 const resourceTypeDisplayNames: Record<Resource['type'], string> = {
   pdf: 'PDF Document',
-  link: 'External Link',
+  link: 'External Link / Quiz',
   video: 'Video Content',
-  document: 'Document',
+  document: 'Document / Guide',
   template: 'Template',
   checklist: 'Checklist',
   diagram: 'Diagram',
-  calculator: 'Calculator',
+  calculator: 'Calculator / Tool',
   timeline: 'Timeline',
   matrix: 'Comparison Matrix',
-  worksheet: 'Worksheet', // Added worksheet
+  worksheet: 'Worksheet',
+  'interactive-scenario': 'Interactive Scenario',
+  simulation: 'Process Simulation',
 };
 
 export function ResourceLibraryView({ resources: initialResources }: ResourceLibraryViewProps) {
@@ -84,7 +96,7 @@ export function ResourceLibraryView({ resources: initialResources }: ResourceLib
             Resource Library
           </CardTitle>
           <CardDescription>
-            Find compliance information, templates, links, and other helpful materials.
+            Find compliance information, templates, links, interactive content, and other helpful materials.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -100,14 +112,14 @@ export function ResourceLibraryView({ resources: initialResources }: ResourceLib
               />
             </div>
             <Select value={selectedType} onValueChange={setSelectedType}>
-              <SelectTrigger className="w-full sm:w-[200px]">
+              <SelectTrigger className="w-full sm:w-[220px]"> {/* Increased width for longer names */}
                 <ListCollapse className="mr-2 h-4 w-4 text-muted-foreground" />
                 <SelectValue placeholder="Filter by type" />
               </SelectTrigger>
               <SelectContent>
                 {uniqueTypes.map(type => (
                   <SelectItem key={type} value={type}>
-                    {type === 'all' ? 'All Types' : resourceTypeDisplayNames[type as Resource['type']] || type}
+                    {type === 'all' ? 'All Types' : resourceTypeDisplayNames[type as Resource['type']] || type.replace('-', ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -119,32 +131,51 @@ export function ResourceLibraryView({ resources: initialResources }: ResourceLib
       {filteredResources.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredResources.map((resource) => {
-            const IconComponent = resource.iconName ? iconMap[resource.iconName] : null;
-            const ActionIcon = resource.type === 'link' || resource.type === 'video' ? iconMap['ExternalLink'] : iconMap['Download'];
-            const actionText = resource.type === 'link' ? 'Open Link' : resource.type === 'video' ? 'Watch Video' : 'Download';
+            const IconComponent = resource.iconName ? iconMap[resource.iconName] : LinkIcon; // Default to LinkIcon
+            const isExternal = resource.type === 'link' || resource.type === 'video' || resource.type === 'calculator' || resource.url.startsWith('http') || resource.url.startsWith('#moodle');
+            const ActionIcon = isExternal ? iconMap['ExternalLink'] : iconMap['Download'];
+            
+            let actionText = 'View Resource';
+            if (isExternal) {
+                 if (resource.type === 'link' && (resource.title.toLowerCase().includes('quiz') || resource.title.toLowerCase().includes('check'))) actionText = 'Take Quiz';
+                 else if (resource.type === 'video') actionText = 'Watch Video';
+                 else if (resource.type === 'interactive-scenario') actionText = 'Start Scenario';
+                 else if (resource.type === 'simulation') actionText = 'Run Simulation';
+                 else actionText = 'Open Link';
+            } else {
+                 actionText = 'Download';
+            }
+
 
             return (
-              <Card key={resource.id} className="flex flex-col justify-between shadow-md hover:shadow-lg transition-shadow duration-200">
+              <Card key={resource.id} className="flex flex-col justify-between shadow-md hover:shadow-lg transition-shadow duration-200 bg-card">
                 <CardHeader>
-                  <div className="flex items-center mb-2">
-                    {IconComponent && <IconComponent className="h-6 w-6 mr-3 text-primary" />}
+                  <div className="flex items-start mb-2">
+                    <IconComponent className="h-6 w-6 mr-3 text-primary flex-shrink-0 mt-1" />
                     <CardTitle className="font-headline text-lg">{resource.title}</CardTitle>
                   </div>
                   <Badge variant="outline" className="w-fit">{resourceTypeDisplayNames[resource.type] || resource.type}</Badge>
                 </CardHeader>
                 <CardContent className="flex-grow">
-                  {resource.description && <p className="text-sm text-muted-foreground mb-2">{resource.description}</p>}
+                  {resource.description && <p className="text-sm text-muted-foreground mb-3">{resource.description}</p>}
                   {resource.moduleAffiliation && (
-                    <div className="text-xs text-muted-foreground">
+                    <div className="text-xs text-muted-foreground mb-3">
                       <span>Related to: </span>
-                      <Badge variant="secondary">{resource.moduleAffiliation}</Badge>
+                      <Badge variant="secondary">{placeholderModules.find(m => m.id === resource.moduleAffiliation)?.title || resource.moduleAffiliation}</Badge>
+                    </div>
+                  )}
+                  {resource.tags && resource.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-1">
+                      {resource.tags.map(tag => (
+                        <Badge key={tag} variant="outline" className="text-xs px-1.5 py-0.5 font-normal">{tag}</Badge>
+                      ))}
                     </div>
                   )}
                 </CardContent>
                 <CardFooter>
                   <Button asChild variant="default" size="sm" className="w-full">
-                    <NextLink href={resource.url} target={resource.type === 'link' ? '_blank' : '_self'} rel={resource.type === 'link' ? 'noopener noreferrer' : undefined}>
-                      {ActionIcon && <ActionIcon className="mr-2 h-4 w-4" />}
+                    <NextLink href={resource.url} target={isExternal ? '_blank' : undefined} rel={isExternal ? 'noopener noreferrer' : undefined} download={!isExternal ? resource.title.replace(/[^a-z0-9]/gi, '_').toLowerCase() : undefined}>
+                      <ActionIcon className="mr-2 h-4 w-4" />
                       {actionText}
                     </NextLink>
                   </Button>
@@ -163,3 +194,15 @@ export function ResourceLibraryView({ resources: initialResources }: ResourceLib
     </div>
   );
 }
+
+// Minimal placeholderModules to resolve circular dependency for CardContent badge
+const placeholderModules: {id: string, title: string}[] = [
+  {id: "module1", title: "Module 1: Payroll Fundamentals & Setup"},
+  {id: "module2", title: "Module 2: Wage & Hour Compliance"},
+  {id: "module3", title: "Module 3: Payroll Software & Systems"},
+  {id: "module4", title: "Module 4: Taxation & Compliance I (Federal)"},
+  {id: "module5", title: "Module 5: Taxation & Compliance II (State & Local)"},
+  {id: "module6", title: "Module 6: Benefits & Deductions Administration"},
+  {id: "module7", title: "Module 7: Payroll Reporting, Reconciliation & Auditing"},
+  {id: "module8", title: "Module 8: Advanced Topics & Real-World Scenarios"},
+];
