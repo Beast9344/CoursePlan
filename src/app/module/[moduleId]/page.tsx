@@ -1,9 +1,13 @@
 
 // src/app/module/[moduleId]/page.tsx
 
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { placeholderModules } from "@/lib/placeholder-data"; // Assuming you have this
-import { BookOpen } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { placeholderModules, placeholderResources, resourceTypeDisplayNames, iconMap } from "@/lib/placeholder-data";
+import type { Resource } from '@/types';
+import { BookOpen, ExternalLink, Download, ArrowRight } from "lucide-react";
+import NextLink from 'next/link';
+import type { LucideIcon } from 'lucide-react';
 
 interface ModulePageProps {
   params: {
@@ -17,7 +21,7 @@ export default function ModulePage({ params }: ModulePageProps) {
 
   if (!module) {
     return (
-      <Card>
+      <Card className="shadow-lg">
         <CardHeader>
           <CardTitle>Module Not Found</CardTitle>
         </CardHeader>
@@ -28,36 +32,100 @@ export default function ModulePage({ params }: ModulePageProps) {
     );
   }
 
+  const moduleSpecificResources = placeholderResources.filter(
+    resource => resource.moduleAffiliation === moduleId
+  );
+
   return (
-    <div className="space-y-6">
-      <Card className="shadow-lg">
-        <CardHeader>
-          <div className="flex items-center mb-2">
-            <BookOpen className="h-7 w-7 mr-3 text-primary" />
-            <CardTitle className="font-headline text-2xl">{module.title}</CardTitle>
+    <div className="space-y-8">
+      <Card className="shadow-xl rounded-xl overflow-hidden">
+        <CardHeader className="bg-card p-6 border-b">
+          <div className="flex items-center mb-3">
+            <BookOpen className="h-8 w-8 mr-3 text-primary" />
+            <CardTitle className="font-headline text-3xl text-foreground">{module.title}</CardTitle>
           </div>
-          {module.description && <CardDescription>{module.description}</CardDescription>}
+          {module.description && <CardDescription className="text-base text-muted-foreground">{module.description}</CardDescription>}
         </CardHeader>
-        <CardContent className="space-y-4">
-          <p className="text-muted-foreground">Module ID: {moduleId}</p>
-          <p>Status: {module.status}</p>
-          <p>Progress: {module.progress}%</p>
-          
-          {module.objectives && module.objectives.length > 0 && (
-            <div>
-              <h3 className="font-semibold text-lg mb-2">Learning Objectives:</h3>
-              <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+        <CardContent className="p-6 space-y-6">
+          <div>
+            <h3 className="font-semibold text-xl mb-3 text-primary font-headline">Learning Objectives</h3>
+            {module.objectives && module.objectives.length > 0 ? (
+              <ul className="list-disc list-inside space-y-1.5 text-muted-foreground pl-2">
                 {module.objectives.map((obj, index) => (
-                  <li key={index}>{obj}</li>
+                  <li key={index} className="text-sm">{obj}</li>
                 ))}
               </ul>
+            ) : (
+              <p className="text-sm text-muted-foreground">No specific learning objectives listed for this module.</p>
+            )}
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t">
+            <div>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">Status</p>
+              <p className="text-sm font-medium text-foreground">{module.status.replace('-', ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}</p>
             </div>
-          )}
+            <div>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">Progress</p>
+              <p className="text-sm font-medium text-foreground">{module.progress}%</p>
+            </div>
+          </div>
           
-          <p className="mt-6 text-center text-gray-500 italic">
-            Further module content (videos, interactive elements, resources specific to this module) would be displayed here.
-          </p>
+          <div className="pt-6 border-t">
+            <h3 className="font-semibold text-xl mb-4 text-primary font-headline">Learning Content & Activities</h3>
+            <p className="text-sm text-muted-foreground mb-6">
+              The core learning materials for this module, such as instructional text, videos, and embedded interactive elements (e.g., from Articulate Storyline), would be presented here. Below are key resources and activities associated with this module.
+            </p>
+            {moduleSpecificResources.length > 0 ? (
+              <div className="space-y-4">
+                {moduleSpecificResources.map((resource) => {
+                  const IconComponent = resource.iconName && iconMap[resource.iconName] ? iconMap[resource.iconName] : ExternalLink;
+                  const isExternal = resource.type === 'link' || resource.type === 'video' || resource.type === 'calculator' || resource.url.startsWith('http') || resource.url.startsWith('#moodle');
+                  const ActionIcon = isExternal ? ExternalLink : Download;
+                  
+                  let actionText = 'View Resource';
+                  if (isExternal) {
+                       if ((resource.type === 'link' || resource.type === 'interactive-scenario') && (resource.title.toLowerCase().includes('quiz') || resource.title.toLowerCase().includes('check'))) actionText = 'Take Quiz / Check';
+                       else if (resource.type === 'video') actionText = 'Watch Video';
+                       else if (resource.type === 'interactive-scenario') actionText = 'Start Scenario';
+                       else if (resource.type === 'simulation') actionText = 'Run Simulation';
+                       else if (resource.type === 'calculator') actionText = 'Open Tool';
+                       else actionText = 'Open Link';
+                  } else {
+                       actionText = 'Download Resource';
+                  }
+
+                  return (
+                    <Card key={resource.id} className="bg-secondary/30 hover:shadow-md transition-shadow">
+                      <CardContent className="p-4 flex items-center justify-between">
+                        <div className="flex items-center">
+                          <IconComponent className="h-6 w-6 mr-3 text-accent flex-shrink-0" />
+                          <div>
+                            <p className="font-medium text-foreground">{resource.title}</p>
+                            <p className="text-xs text-muted-foreground">{resourceTypeDisplayNames[resource.type as Resource['type']] || resource.type}</p>
+                          </div>
+                        </div>
+                        <Button variant="ghost" size="sm" asChild>
+                          <NextLink href={resource.url} target={isExternal ? "_blank" : undefined} rel={isExternal ? "noopener noreferrer" : undefined} download={!isExternal ? resource.title.replace(/[^a-z0-9]/gi, '_').toLowerCase() : undefined}>
+                            {actionText}
+                            <ActionIcon className="ml-2 h-4 w-4" />
+                          </NextLink>
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>
+            ) : (
+              <p className="text-sm text-muted-foreground text-center py-4">No specific resources or activities listed for this module yet.</p>
+            )}
+          </div>
         </CardContent>
+        <CardFooter className="bg-card p-6 border-t">
+            <p className="text-xs text-muted-foreground text-center w-full">
+                Module assessment (quizzes, practical exercises) and features like discussion forums or certificate issuance would be managed within the Moodle LMS.
+            </p>
+        </CardFooter>
       </Card>
     </div>
   );
