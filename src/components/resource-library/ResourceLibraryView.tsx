@@ -21,15 +21,19 @@ import {
   CheckSquare,
   Calculator,
   GanttChartSquare,
-  Rows3,
+  Rows3, // Can be used for document or list-like templates
   ClipboardCheck,
   Table2,
   FileSpreadsheet,
-  MousePointerClick, // Added for interactive-scenario
-  PlaySquare,       // Added for simulation
-  HelpCircle,       // For quizzes/knowledge checks (link type)
-  Map,              // For state resources
-  ShieldCheck       // For ethics
+  MousePointerClick,
+  PlaySquare,
+  HelpCircle,
+  Map,
+  ShieldCheck,
+  GitFork, // For decision trees / branching scenarios
+  Workflow, // For workflow diagrams
+  CalendarDays, // For calendar templates
+  Network, // For diagrams
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import NextLink from 'next/link'; 
@@ -44,16 +48,20 @@ const iconMap: { [key: string]: LucideIcon } = {
   Video,
   CheckSquare,
   Calculator,
-  GanttChartSquare,
+  GanttChartSquare, // For timeline
   Rows3,
-  ClipboardCheck,
-  Table2,
-  FileSpreadsheet,
-  MousePointerClick,
-  PlaySquare,
-  HelpCircle,
-  Map,
-  ShieldCheck,
+  ClipboardCheck, // For audit templates/checklists
+  Table2, // For matrix
+  FileSpreadsheet, // For worksheets
+  MousePointerClick, // For interactive scenarios
+  PlaySquare, // For simulations
+  HelpCircle, // For quizzes/knowledge checks (link type)
+  Map, // For state resources
+  ShieldCheck, // For ethics
+  GitFork, // For decision trees
+  Workflow, // For workflow diagrams
+  CalendarDays, // For calendar templates
+  Network, // For general diagrams
   Download, 
   ExternalLink, 
 };
@@ -65,13 +73,15 @@ const resourceTypeDisplayNames: Record<Resource['type'], string> = {
   document: 'Document / Guide',
   template: 'Template',
   checklist: 'Checklist',
-  diagram: 'Diagram',
+  diagram: 'Diagram / Chart',
   calculator: 'Calculator / Tool',
-  timeline: 'Timeline',
+  timeline: 'Timeline / Plan',
   matrix: 'Comparison Matrix',
   worksheet: 'Worksheet',
-  'interactive-scenario': 'Interactive Scenario',
+  'interactive-scenario': 'Interactive Scenario / Decision Tree',
   simulation: 'Process Simulation',
+  workflow: 'Workflow / Process Map',
+  'case-study': 'Case Study Document',
 };
 
 export function ResourceLibraryView({ resources: initialResources }: ResourceLibraryViewProps) {
@@ -112,7 +122,7 @@ export function ResourceLibraryView({ resources: initialResources }: ResourceLib
               />
             </div>
             <Select value={selectedType} onValueChange={setSelectedType}>
-              <SelectTrigger className="w-full sm:w-[220px]"> {/* Increased width for longer names */}
+              <SelectTrigger className="w-full sm:w-[280px]"> {/* Increased width for longer names */}
                 <ListCollapse className="mr-2 h-4 w-4 text-muted-foreground" />
                 <SelectValue placeholder="Filter by type" />
               </SelectTrigger>
@@ -131,21 +141,21 @@ export function ResourceLibraryView({ resources: initialResources }: ResourceLib
       {filteredResources.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredResources.map((resource) => {
-            const IconComponent = resource.iconName ? iconMap[resource.iconName] : LinkIcon; // Default to LinkIcon
+            const IconComponent = resource.iconName && iconMap[resource.iconName] ? iconMap[resource.iconName] : LinkIcon;
             const isExternal = resource.type === 'link' || resource.type === 'video' || resource.type === 'calculator' || resource.url.startsWith('http') || resource.url.startsWith('#moodle');
             const ActionIcon = isExternal ? iconMap['ExternalLink'] : iconMap['Download'];
             
             let actionText = 'View Resource';
             if (isExternal) {
-                 if (resource.type === 'link' && (resource.title.toLowerCase().includes('quiz') || resource.title.toLowerCase().includes('check'))) actionText = 'Take Quiz';
+                 if ((resource.type === 'link' || resource.type === 'interactive-scenario') && (resource.title.toLowerCase().includes('quiz') || resource.title.toLowerCase().includes('check') || resource.title.toLowerCase().includes('knowledge check'))) actionText = 'Take Quiz / Check';
                  else if (resource.type === 'video') actionText = 'Watch Video';
-                 else if (resource.type === 'interactive-scenario') actionText = 'Start Scenario';
-                 else if (resource.type === 'simulation') actionText = 'Run Simulation';
+                 else if (resource.type === 'interactive-scenario' || resource.title.toLowerCase().includes('scenario') || resource.title.toLowerCase().includes('decision tree')) actionText = 'Start Scenario';
+                 else if (resource.type === 'simulation' || resource.title.toLowerCase().includes('simulator')) actionText = 'Run Simulation';
+                 else if (resource.type === 'calculator' || resource.title.toLowerCase().includes('calculator')) actionText = 'Open Tool';
                  else actionText = 'Open Link';
             } else {
                  actionText = 'Download';
             }
-
 
             return (
               <Card key={resource.id} className="flex flex-col justify-between shadow-md hover:shadow-lg transition-shadow duration-200 bg-card">
@@ -195,14 +205,11 @@ export function ResourceLibraryView({ resources: initialResources }: ResourceLib
   );
 }
 
-// Minimal placeholderModules to resolve circular dependency for CardContent badge
+// Updated placeholderModules for ResourceLibraryView context
 const placeholderModules: {id: string, title: string}[] = [
-  {id: "module1", title: "Module 1: Payroll Fundamentals & Setup"},
-  {id: "module2", title: "Module 2: Wage & Hour Compliance"},
-  {id: "module3", title: "Module 3: Payroll Software & Systems"},
-  {id: "module4", title: "Module 4: Taxation & Compliance I (Federal)"},
-  {id: "module5", title: "Module 5: Taxation & Compliance II (State & Local)"},
-  {id: "module6", title: "Module 6: Benefits & Deductions Administration"},
-  {id: "module7", title: "Module 7: Payroll Reporting, Reconciliation & Auditing"},
-  {id: "module8", title: "Module 8: Advanced Topics & Real-World Scenarios"},
+  { id: 'mppf', title: 'Module 1: Payroll Processing Fundamentals' },
+  { id: 'mps', title: 'Module 2: Payroll Software & Systems' },
+  { id: 'mtc', title: 'Module 3: Taxation & Compliance' },
+  { id: 'mbd', title: 'Module 4: Benefits & Deductions' },
+  { id: 'maem', title: 'Module 5: Auditing & Error Management'},
 ];

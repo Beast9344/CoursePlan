@@ -15,7 +15,6 @@ export interface CourseModule {
   scormUrl?: string;
 }
 
-// Added 'interactive-scenario' and 'simulation' to ResourceType
 export type ResourceType = 
   | 'pdf' 
   | 'link' 
@@ -29,7 +28,9 @@ export type ResourceType =
   | 'matrix' 
   | 'worksheet'
   | 'interactive-scenario'
-  | 'simulation';
+  | 'simulation'
+  | 'workflow' // Added for Garnishment processing workflow
+  | 'case-study'; // Added for case studies, will map to document icon
 
 export interface Resource {
   id: string;
