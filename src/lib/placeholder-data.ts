@@ -1,16 +1,16 @@
 
 import type { CourseModule, Resource } from '@/types';
 import type { LucideIcon } from 'lucide-react';
-import { 
-  Download, 
-  ExternalLink, 
+import {
+  Download,
+  ExternalLink,
   FileText,
-  Link as LinkIcon, 
+  Link as LinkIcon,
   Video,
   CheckSquare,
   Calculator,
   GanttChartSquare,
-  Rows3, 
+  Rows3,
   ClipboardCheck,
   Table2,
   FileSpreadsheet,
@@ -19,10 +19,10 @@ import {
   HelpCircle,
   Map,
   ShieldCheck,
-  GitFork, 
-  Workflow, 
-  CalendarDays, 
-  Network, 
+  GitFork,
+  Workflow,
+  CalendarDays,
+  Network,
 } from 'lucide-react';
 
 export const iconMap: { [key: string]: LucideIcon } = {
@@ -45,8 +45,8 @@ export const iconMap: { [key: string]: LucideIcon } = {
   Workflow, // For workflow diagrams
   CalendarDays, // For calendar templates
   Network, // For general diagrams or concept maps
-  Download, 
-  ExternalLink, 
+  Download,
+  ExternalLink,
 };
 
 export const resourceTypeDisplayNames: Record<Resource['type'], string> = {
@@ -58,7 +58,7 @@ export const resourceTypeDisplayNames: Record<Resource['type'], string> = {
   checklist: 'Checklist',
   diagram: 'Diagram / Visual Aid',
   calculator: 'Calculation Tool',
-  timeline: 'Timeline / Plan',
+  timeline: 'Interactive Timeline / Plan',
   matrix: 'Comparison Matrix / Grid',
   worksheet: 'Worksheet / Exercise',
   'interactive-scenario': 'Interactive Scenario',
@@ -74,8 +74,9 @@ export const placeholderModules: CourseModule[] = [
     id: 'mppf', // Module 1: Payroll Processing Fundamentals
     title: 'Module 1: Payroll Processing Fundamentals',
     description: 'Master the essential steps of payroll, from employee setup to timekeeping and understanding the basic workflow.',
-    status: 'not-started',
-    progress: 0,
+    status: 'completed',
+    progress: 100,
+    score: 92,
     dependencies: [],
     objectives: [
       'Understand the complete payroll processing cycle.',
@@ -89,8 +90,9 @@ export const placeholderModules: CourseModule[] = [
     id: 'mps', // Module 2: Payroll Software & Systems
     title: 'Module 2: Payroll Software & Systems',
     description: 'Learn to select, implement, and utilize payroll software effectively, including decision-making and vendor comparison.',
-    status: 'not-started',
-    progress: 0,
+    status: 'in-progress',
+    progress: 60,
+    score: 75,
     dependencies: ['mppf'],
     objectives: [
       'Categorize different types of payroll software.',
@@ -107,6 +109,7 @@ export const placeholderModules: CourseModule[] = [
     description: 'Navigate the complexities of federal and state payroll taxes, understand compliance requirements, and apply calculations.',
     status: 'not-started',
     progress: 0,
+    // score: undefined, // No score yet
     dependencies: ['mppf'],
     objectives: [
       'Differentiate between federal and state tax obligations.',
@@ -204,7 +207,7 @@ export const placeholderResources: Resource[] = [
     description: 'A basic audit template for fundamental payroll processes.',
     moduleAffiliation: 'mppf', tags: ['downloadable', 'audit', 'template', 'fundamentals'],
   },
-  { 
+  {
     id: 'res_mppf_dl_software_eval_matrix', title: 'Downloadable: Basic Software Feature Matrix', type: 'matrix',
     url: '/resources/mppf_software_eval_matrix_basic.xlsx', iconName: 'Table2',
     description: 'A basic matrix for evaluating essential software features, relevant even at a fundamental level.',
@@ -236,7 +239,7 @@ export const placeholderResources: Resource[] = [
     description: 'A detailed case study analyzing a company\'s payroll system selection process.',
     moduleAffiliation: 'mps', tags: ['case study', 'system selection', 'software'],
   },
-   {
+  {
     id: 'res_mps_scenario_vendor_negotiation', title: 'Interactive Scenario: Vendor Negotiation Tactics', type: 'interactive-scenario',
     url: '#moodle-scenario-mps-negotiation', iconName: 'MousePointerClick',
     description: 'Branching scenario on negotiating with payroll software vendors (Articulate).',
@@ -360,7 +363,7 @@ export const placeholderResources: Resource[] = [
     description: 'A tool for calculating employee Paid Time Off accruals based on different policies. (Moodle Tool or Spreadsheet)',
     moduleAffiliation: 'mbd', tags: ['pto', 'calculator', 'accruals', 'tool'],
   },
-   {
+  {
     id: 'res_mbd_scenario_complex_deductions', title: 'Interactive Scenario: Handling Complex Deductions', type: 'interactive-scenario',
     url: '#moodle-scenario-mbd-deductions', iconName: 'MousePointerClick',
     description: 'Scenario focusing on calculating and processing complex employee deductions like multiple garnishments or benefit changes (Articulate).',
@@ -458,7 +461,7 @@ export const placeholderResources: Resource[] = [
     description: 'Matrix for evaluating reporting, analytics, and auditing features in payroll software.',
     moduleAffiliation: 'maem', tags: ['downloadable', 'software evaluation', 'matrix', 'reporting', 'auditing'],
   },
-  
+
   // --- General Resources ---
   {
     id: 'res_gen_ethics', title: 'Ethics in Payroll Management Guide', type: 'document',

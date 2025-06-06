@@ -10,28 +10,29 @@ export interface CourseModule {
   dependencies?: string[];
   status: ModuleStatus;
   progress: number; // 0-100
+  score?: number; // Optional: 0-100
   objectives?: string[];
-  videoUrl?: string; // Added for video lecture
+  videoUrl?: string;
   scormUrl?: string;
 }
 
-export type ResourceType = 
-  | 'pdf' 
-  | 'link' 
-  | 'video' 
-  | 'document' 
-  | 'template' 
-  | 'checklist' 
-  | 'diagram' 
-  | 'calculator' 
-  | 'timeline' 
-  | 'matrix' 
+export type ResourceType =
+  | 'pdf'
+  | 'link'
+  | 'video'
+  | 'document'
+  | 'template'
+  | 'checklist'
+  | 'diagram'
+  | 'calculator'
+  | 'timeline'
+  | 'matrix'
   | 'worksheet'
   | 'interactive-scenario'
   | 'simulation'
   | 'workflow'
   | 'case-study'
-  | 'knowledge-check'; // Added for quizzes/knowledge checks
+  | 'knowledge-check';
 
 export interface Resource {
   id: string;
@@ -39,7 +40,7 @@ export interface Resource {
   description?: string;
   type: ResourceType;
   url: string;
-  iconName?: string; 
-  tags?: string[]; 
-  moduleAffiliation?: string; 
+  iconName?: string;
+  tags?: string[];
+  moduleAffiliation?: string;
 }

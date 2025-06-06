@@ -3,6 +3,7 @@ import type { CourseModule } from '@/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { ModuleProgressCard } from './ModuleProgressCard';
+import { Trophy, BarChart3 } from 'lucide-react'; // Added icons
 
 interface ProgressDashboardViewProps {
   modules: CourseModule[];
@@ -14,6 +15,11 @@ export function ProgressDashboardView({ modules, overallProgress, userName = "Le
   const completedModules = modules.filter(m => m.status === 'completed').length;
   const totalModules = modules.length;
 
+  const scoredModules = modules.filter(m => typeof m.score === 'number');
+  const averageScore = scoredModules.length > 0
+    ? Math.round(scoredModules.reduce((acc, module) => acc + (module.score || 0), 0) / scoredModules.length)
+    : null;
+
   return (
     <div className="space-y-6">
       <Card className="shadow-lg">
@@ -24,12 +30,29 @@ export function ProgressDashboardView({ modules, overallProgress, userName = "Le
         <CardContent className="space-y-4">
           <div>
             <div className="flex justify-between items-center mb-1">
-              <p className="text-sm font-medium">Overall Progress</p>
+              <p className="text-sm font-medium">Overall Course Progress</p>
               <p className="text-sm font-bold text-primary">{Math.round(overallProgress)}%</p>
             </div>
             <Progress value={overallProgress} aria-label={`Overall progress: ${Math.round(overallProgress)}%`} className="h-3 rounded-full" />
           </div>
-          <p className="text-sm text-muted-foreground">You have completed {completedModules} out of {totalModules} modules.</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+            <div className="flex items-center space-x-2 p-3 bg-secondary/30 rounded-md">
+              <Trophy className="h-5 w-5 text-primary" />
+              <div>
+                <p className="text-xs text-muted-foreground">Modules Completed</p>
+                <p className="text-sm font-semibold text-foreground">{completedModules} / {totalModules}</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-2 p-3 bg-secondary/30 rounded-md">
+              <BarChart3 className="h-5 w-5 text-primary" />
+              <div>
+                <p className="text-xs text-muted-foreground">Average Score</p>
+                <p className="text-sm font-semibold text-foreground">
+                  {averageScore !== null ? `${averageScore}%` : 'N/A'}
+                </p>
+              </div>
+            </div>
+          </div>
         </CardContent>
       </Card>
 
