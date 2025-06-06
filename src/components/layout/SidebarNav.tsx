@@ -17,8 +17,8 @@ import {
   Library,
   Settings,
   LifeBuoy,
-  BotMessageSquare,
   UserCircle,
+  Briefcase, // Changed from BotMessageSquare
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -37,8 +37,8 @@ export function SidebarNav() {
     <>
       <SidebarHeader className="p-4">
         <Link href="/" className="flex items-center gap-2">
-          <BotMessageSquare className="h-8 w-8 text-primary" />
-          <span className="text-xl font-semibold font-headline group-data-[collapsible=icon]:hidden">Moodle Mentor</span>
+          <Briefcase className="h-8 w-8 text-primary" />
+          <span className="text-lg font-semibold font-headline group-data-[collapsible=icon]:hidden">Payroll Fundamentals</span>
         </Link>
       </SidebarHeader>
 

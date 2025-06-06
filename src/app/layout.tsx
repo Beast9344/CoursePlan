@@ -4,8 +4,8 @@ import {AppLayout} from '@/components/layout/AppLayout';
 import { Toaster } from "@/components/ui/toaster"; // Import Toaster
 
 export const metadata: Metadata = {
-  title: 'Moodle Mentor',
-  description: 'Your AI-powered Moodle learning assistant.',
+  title: 'Payroll Fundamentals',
+  description: 'Your AI-powered learning assistant for Payroll Fundamentals.',
 };
 
 export default function RootLayout({

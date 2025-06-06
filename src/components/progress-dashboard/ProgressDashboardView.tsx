@@ -3,7 +3,9 @@ import type { CourseModule } from '@/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { ModuleProgressCard } from './ModuleProgressCard';
-import { Trophy, BarChart3 } from 'lucide-react'; // Added icons
+import { Trophy, BarChart3, Award, ExternalLink } from 'lucide-react'; 
+import { Button } from '@/components/ui/button';
+import NextLink from 'next/link';
 
 interface ProgressDashboardViewProps {
   modules: CourseModule[];
@@ -46,13 +48,32 @@ export function ProgressDashboardView({ modules, overallProgress, userName = "Le
             <div className="flex items-center space-x-2 p-3 bg-secondary/30 rounded-md">
               <BarChart3 className="h-5 w-5 text-primary" />
               <div>
-                <p className="text-xs text-muted-foreground">Average Score</p>
+                <p className="text-xs text-muted-foreground">Average Score (Completed Modules)</p>
                 <p className="text-sm font-semibold text-foreground">
                   {averageScore !== null ? `${averageScore}%` : 'N/A'}
                 </p>
               </div>
             </div>
           </div>
+        </CardContent>
+      </Card>
+
+      <Card className="shadow-lg">
+        <CardHeader>
+          <CardTitle className="font-headline text-xl flex items-center">
+            <Award className="mr-2 h-6 w-6 text-primary" />
+            Certification & Achievements
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm text-muted-foreground mb-4">
+            To earn your Payroll Fundamentals Digital Badge and Certificate, you must achieve an 80% or higher pass mark in all module quizzes and the final comprehensive exam, all administered through the Moodle LMS.
+          </p>
+          <Button asChild variant="outline" className="w-full sm:w-auto">
+            <NextLink href="#moodle-achievements-page" target="_blank" rel="noopener noreferrer">
+              View Your Achievements on Moodle <ExternalLink className="ml-2 h-4 w-4" />
+            </NextLink>
+          </Button>
         </CardContent>
       </Card>
 

@@ -6,7 +6,10 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { Button } from "@/components/ui/button";
 import { placeholderModules, placeholderResources, resourceTypeDisplayNames, iconMap } from "@/lib/placeholder-data";
 import type { Resource } from '@/types';
-import { BookOpen, ExternalLink, Download, ArrowRight, PlayCircle, FileQuestion } from "lucide-react";
+import { 
+  BookOpen, ExternalLink, Download, PlayCircle, FileQuestion, 
+  ListChecks, BarChartBig, FileText, Puzzle, Lightbulb, Info
+} from "lucide-react"; // Added more icons
 import type { LucideIcon } from 'lucide-react';
 
 interface ModulePageProps {
@@ -14,6 +17,9 @@ interface ModulePageProps {
     moduleId: string;
   };
 }
+
+const coreDownloadableResourceTypes: Resource['type'][] = ['checklist', 'worksheet', 'template', 'matrix'];
+const interactiveLearningTypes: Resource['type'][] = ['interactive-scenario', 'simulation'];
 
 export default function ModulePage({ params }: ModulePageProps) {
   const { moduleId } = params;
@@ -36,8 +42,11 @@ export default function ModulePage({ params }: ModulePageProps) {
     resource => resource.moduleAffiliation === moduleId
   );
 
-  const moduleKnowledgeCheck = moduleSpecificResources.find(r => r.type === 'knowledge-check');
-  const quizUrl = moduleKnowledgeCheck ? moduleKnowledgeCheck.url : `#moodle-quiz-generic-${moduleId}`;
+  const interactiveLearningResources = moduleSpecificResources.filter(r => interactiveLearningTypes.includes(r.type));
+  const downloadableCoreResources = moduleSpecificResources.filter(r => coreDownloadableResourceTypes.includes(r.type));
+  const additionalResources = moduleSpecificResources.filter(
+    r => !interactiveLearningTypes.includes(r.type) && !coreDownloadableResourceTypes.includes(r.type) && r.type !== 'knowledge-check' && r.type !== 'video'
+  );
 
 
   return (
@@ -50,9 +59,13 @@ export default function ModulePage({ params }: ModulePageProps) {
           </div>
           {module.description && <CardDescription className="text-base text-muted-foreground">{module.description}</CardDescription>}
         </CardHeader>
+        
         <CardContent className="p-6 space-y-6">
           <div>
-            <h3 className="font-semibold text-xl mb-3 text-primary font-headline">Learning Objectives</h3>
+            <h3 className="font-semibold text-xl mb-3 text-primary font-headline flex items-center">
+                <Lightbulb className="h-6 w-6 mr-2"/>
+                Learning Objectives
+            </h3>
             {module.objectives && module.objectives.length > 0 ? (
               <ul className="list-disc list-inside space-y-1.5 text-muted-foreground pl-2">
                 {module.objectives.map((obj, index) => (
@@ -89,7 +102,7 @@ export default function ModulePage({ params }: ModulePageProps) {
                     layout="fill"
                     objectFit="cover"
                     className="hover:opacity-90 transition-opacity"
-                    data-ai-hint="video lesson" 
+                    data-ai-hint="video lesson"
                   />
                 </NextLink>
               </div>
@@ -100,31 +113,101 @@ export default function ModulePage({ params }: ModulePageProps) {
               </Button>
             </div>
           )}
-
+          
           <div className="pt-6 border-t">
-            <h3 className="font-semibold text-xl mb-4 text-primary font-headline">Supporting Resources & Activities</h3>
-            <p className="text-sm text-muted-foreground mb-6">
-              Explore these materials to deepen your understanding and practice key skills for this module.
+            <h3 className="font-semibold text-xl mb-4 text-primary font-headline flex items-center">
+                <FileQuestion className="h-6 w-6 mr-2" />
+                Module Quiz (Sample)
+            </h3>
+            <p className="text-sm text-muted-foreground mb-4">
+              Test your understanding with this sample quiz. Official, graded quizzes (80% pass mark typically required) are completed on Moodle.
             </p>
-            {moduleSpecificResources.length > 0 ? (
-              <div className="space-y-4">
-                {moduleSpecificResources.map((resource) => {
-                  const IconComponent = resource.iconName && iconMap[resource.iconName] ? iconMap[resource.iconName] : ExternalLink;
-                  const isExternal = resource.type === 'link' || resource.type === 'video' || resource.type === 'calculator' || resource.url.startsWith('http') || resource.url.startsWith('#moodle');
-                  const ActionIcon = isExternal ? ExternalLink : Download;
-                  
-                  let actionText = 'View Resource';
-                  if (isExternal) {
-                       if ((resource.type === 'link' || resource.type === 'interactive-scenario' || resource.type === 'knowledge-check') && (resource.title.toLowerCase().includes('quiz') || resource.title.toLowerCase().includes('check'))) actionText = 'Take Quiz / Check';
-                       else if (resource.type === 'video') actionText = 'Watch Video';
-                       else if (resource.type === 'interactive-scenario') actionText = 'Start Scenario';
-                       else if (resource.type === 'simulation') actionText = 'Run Simulation';
-                       else if (resource.type === 'calculator') actionText = 'Open Tool';
-                       else actionText = 'Open Link';
-                  } else {
-                       actionText = 'Download Resource';
-                  }
+            <Button asChild variant="default" className="w-full sm:w-auto">
+              <NextLink href="/quiz/sample">
+                Try Sample Quiz <ExternalLink className="ml-2 h-4 w-4" />
+              </NextLink>
+            </Button>
+          </div>
 
+          {interactiveLearningResources.length > 0 && (
+            <div className="pt-6 border-t">
+              <h3 className="font-semibold text-xl mb-4 text-primary font-headline flex items-center">
+                <Puzzle className="h-6 w-6 mr-2" />
+                Interactive Learning & Simulations
+              </h3>
+              <div className="space-y-4">
+                {interactiveLearningResources.map((resource) => {
+                  const IconComponent = resource.iconName && iconMap[resource.iconName] ? iconMap[resource.iconName] : ExternalLink;
+                  return (
+                    <Card key={resource.id} className="bg-secondary/30 hover:shadow-md transition-shadow">
+                      <CardContent className="p-4 flex items-center justify-between">
+                        <div className="flex items-center">
+                          <IconComponent className="h-6 w-6 mr-3 text-accent flex-shrink-0" />
+                          <div>
+                            <p className="font-medium text-foreground">{resource.title}</p>
+                            <p className="text-xs text-muted-foreground">{resourceTypeDisplayNames[resource.type as Resource['type']] || resource.type}</p>
+                          </div>
+                        </div>
+                        <Button variant="ghost" size="sm" asChild>
+                          <NextLink href={resource.url} target="_blank" rel="noopener noreferrer">
+                            Start Activity <ExternalLink className="ml-2 h-4 w-4" />
+                          </NextLink>
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {downloadableCoreResources.length > 0 && (
+            <div className="pt-6 border-t">
+              <h3 className="font-semibold text-xl mb-4 text-primary font-headline flex items-center">
+                <ListChecks className="h-6 w-6 mr-2" />
+                Downloadable Core Templates & Checklists
+              </h3>
+              <div className="space-y-4">
+                {downloadableCoreResources.map((resource) => {
+                  const IconComponent = resource.iconName && iconMap[resource.iconName] ? iconMap[resource.iconName] : Download;
+                  return (
+                    <Card key={resource.id} className="bg-secondary/30 hover:shadow-md transition-shadow">
+                      <CardContent className="p-4 flex items-center justify-between">
+                        <div className="flex items-center">
+                          <IconComponent className="h-6 w-6 mr-3 text-accent flex-shrink-0" />
+                          <div>
+                            <p className="font-medium text-foreground">{resource.title}</p>
+                            <p className="text-xs text-muted-foreground">{resourceTypeDisplayNames[resource.type as Resource['type']] || resource.type}</p>
+                          </div>
+                        </div>
+                        <Button variant="ghost" size="sm" asChild>
+                          <NextLink href={resource.url} download={resource.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}>
+                            Download <Download className="ml-2 h-4 w-4" />
+                          </NextLink>
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+          
+          {additionalResources.length > 0 && (
+            <div className="pt-6 border-t">
+              <h3 className="font-semibold text-xl mb-4 text-primary font-headline flex items-center">
+                <Info className="h-6 w-6 mr-2" />
+                Additional Supporting Materials
+              </h3>
+              <div className="space-y-4">
+                {additionalResources.map((resource) => {
+                  const IconComponent = resource.iconName && iconMap[resource.iconName] ? iconMap[resource.iconName] : ExternalLink;
+                  const isExternal = resource.type === 'link' || resource.url.startsWith('http') || resource.url.startsWith('#moodle');
+                  const ActionIcon = isExternal ? ExternalLink : Download;
+                  let actionText = isExternal ? 'Open Link' : 'Download';
+                  if(resource.type === 'case-study' && isExternal) actionText = 'Read Case Study';
+                  else if(resource.type === 'case-study' && !isExternal) actionText = 'Download Case Study';
+                  
                   return (
                     <Card key={resource.id} className="bg-secondary/30 hover:shadow-md transition-shadow">
                       <CardContent className="p-4 flex items-center justify-between">
@@ -146,30 +229,14 @@ export default function ModulePage({ params }: ModulePageProps) {
                   );
                 })}
               </div>
-            ) : (
-              <p className="text-sm text-muted-foreground text-center py-4">No specific resources or activities listed for this module yet.</p>
-            )}
-          </div>
+            </div>
+          )}
 
-          <div className="pt-6 border-t">
-            <h3 className="font-semibold text-xl mb-4 text-primary font-headline flex items-center">
-                <FileQuestion className="h-6 w-6 mr-2" />
-                Module Quiz
-            </h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              Test your understanding of this module's concepts. An 80% pass mark is typically required for course progression and to earn achievements.
-            </p>
-            <Button asChild variant="default" className="w-full sm:w-auto">
-              <NextLink href={quizUrl} target="_blank" rel="noopener noreferrer">
-                Take Module Quiz on Moodle <ExternalLink className="ml-2 h-4 w-4" />
-              </NextLink>
-            </Button>
-          </div>
 
         </CardContent>
         <CardFooter className="bg-card p-6 border-t">
             <p className="text-xs text-muted-foreground text-center w-full">
-                Module assessment (quizzes, practical exercises), final exams, and the issuance of digital badges or certificates are managed within the Moodle LMS. Moodle Mentor helps you track progress and access learning materials.
+                Module assessment (graded quizzes, practical exercises), final exams, and the issuance of digital badges or certificates (requiring an 80% pass mark) are managed within the Moodle LMS. Moodle Mentor helps you track progress and access learning materials.
             </p>
         </CardFooter>
       </Card>
