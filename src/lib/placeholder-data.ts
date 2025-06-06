@@ -95,6 +95,13 @@ export const placeholderResources: Resource[] = [
     description: 'A template to compare features of different timekeeping systems.',
     moduleAffiliation: 'mppf', tags: ['timekeeping', 'comparison', 'tool', 'matrix'],
   },
+  // Mandatory additions for Module 1
+  {
+    id: 'res_mppf_scenario_fraudcase', title: 'Interactive Scenario: Fundamentals Case Study', type: 'interactive-scenario',
+    url: '#moodle-scenario-mppf-fraud', iconName: 'MousePointerClick',
+    description: 'Explore a real-world example related to payroll fundamentals in an interactive scenario.',
+    moduleAffiliation: 'mppf', tags: ['interactive scenario', 'case study', 'fundamentals'],
+  },
   {
     id: 'res_mppf_quiz_workflow', title: 'Knowledge Check: Payroll Process Workflow', type: 'link',
     url: '#moodle-quiz-mppf-workflow', iconName: 'HelpCircle',
@@ -102,27 +109,40 @@ export const placeholderResources: Resource[] = [
     moduleAffiliation: 'mppf', tags: ['quiz', 'knowledge check', 'workflow'],
   },
   {
-    id: 'res_mppf_scenario_generic', title: 'Interactive Scenario: Initial Employee Setup', type: 'interactive-scenario',
-    url: '#moodle-scenario-mppf-setup', iconName: 'MousePointerClick',
-    description: 'Navigate common challenges in setting up a new employee in the payroll system.',
-    moduleAffiliation: 'mppf', tags: ['interactive scenario', 'employee setup'],
+    id: 'res_mppf_simulation_basicsteps', title: 'Process Simulation: Basic Payroll Steps', type: 'simulation',
+    url: '#moodle-simulation-mppf-basicsteps', iconName: 'PlaySquare',
+    description: 'Step-by-step walkthrough of fundamental payroll processing actions.',
+    moduleAffiliation: 'mppf', tags: ['simulation', 'payroll steps'],
   },
   {
-    id: 'res_mppf_simulation_generic', title: 'Process Simulation: Basic Data Entry', type: 'simulation',
-    url: '#moodle-simulation-mppf-dataentry', iconName: 'PlaySquare',
-    description: 'Step-by-step walkthrough of entering basic employee data into a mock payroll system.',
-    moduleAffiliation: 'mppf', tags: ['simulation', 'data entry'],
+    id: 'res_mppf_dl_compliance_checklist', title: 'Downloadable: Fundamentals Compliance Checklist', type: 'checklist',
+    url: '/resources/mppf_compliance_checklist_generic.pdf', iconName: 'CheckSquare',
+    description: 'A general compliance checklist for payroll fundamentals.',
+    moduleAffiliation: 'mppf', tags: ['downloadable', 'compliance', 'checklist', 'fundamentals'],
   },
   {
-    id: 'res_mppf_dl_compliance', title: 'Downloadable: General Payroll Compliance Checklist', type: 'checklist',
-    url: '/resources/mppf_compliance_checklist.pdf', iconName: 'CheckSquare',
-    description: 'A general checklist for ensuring payroll compliance.',
-    moduleAffiliation: 'mppf', tags: ['downloadable', 'compliance', 'checklist'],
+    id: 'res_mppf_dl_tax_worksheet', title: 'Downloadable: Basic Tax Calculation Worksheet', type: 'worksheet',
+    url: '/resources/mppf_tax_worksheet_basic.xlsx', iconName: 'FileSpreadsheet',
+    description: 'A worksheet for practicing basic tax calculations relevant to fundamentals.',
+    moduleAffiliation: 'mppf', tags: ['downloadable', 'tax calculation', 'worksheet', 'fundamentals'],
   },
+  {
+    id: 'res_mppf_dl_audit_template', title: 'Downloadable: Basic Audit Template', type: 'template',
+    url: '/resources/mppf_audit_template_basic.docx', iconName: 'ClipboardCheck',
+    description: 'A basic audit template for fundamental payroll processes.',
+    moduleAffiliation: 'mppf', tags: ['downloadable', 'audit', 'template', 'fundamentals'],
+  },
+  { // Software evaluation matrix might be less relevant for pure fundamentals, but per request for all modules.
+    id: 'res_mppf_dl_software_eval_matrix', title: 'Downloadable: Basic Software Feature Matrix', type: 'matrix',
+    url: '/resources/mppf_software_eval_matrix_basic.xlsx', iconName: 'Table2',
+    description: 'A basic matrix for evaluating essential software features.',
+    moduleAffiliation: 'mppf', tags: ['downloadable', 'software evaluation', 'matrix', 'fundamentals'],
+  },
+
   // --- Module 2: Payroll Software & Systems (mps) ---
   {
-    id: 'res_mps_tree_softwarecat', title: 'Software Category Decision Tree', type: 'interactive-scenario', // Using interactive-scenario for decision tree
-    url: '#moodle-decisiontree-mps-softwarecat', iconName: 'GitFork', // Specific icon for decision tree
+    id: 'res_mps_tree_softwarecat', title: 'Software Category Decision Tree', type: 'interactive-scenario',
+    url: '#moodle-decisiontree-mps-softwarecat', iconName: 'GitFork',
     description: 'An interactive decision tree to help select the right category of payroll software.',
     moduleAffiliation: 'mps', tags: ['software selection', 'decision tree', 'interactive'],
   },
@@ -139,23 +159,43 @@ export const placeholderResources: Resource[] = [
     moduleAffiliation: 'mps', tags: ['software implementation', 'timeline', 'simulation'],
   },
   {
-    id: 'res_mps_casestudy_selection', title: 'Case Study: System Selection Process', type: 'case-study', // Maps to document icon
+    id: 'res_mps_casestudy_selection', title: 'Case Study: System Selection Process', type: 'case-study',
     url: '/resources/mps_casestudy_selection.pdf', iconName: 'FileText',
     description: 'A detailed case study analyzing a company\'s payroll system selection process.',
     moduleAffiliation: 'mps', tags: ['case study', 'system selection', 'software'],
   },
+  // Mandatory additions for Module 2
   {
-    id: 'res_mps_quiz_generic', title: 'Knowledge Check: Software Evaluation Criteria', type: 'link',
+    id: 'res_mps_quiz_eval_criteria', title: 'Knowledge Check: Software Evaluation Criteria', type: 'link',
     url: '#moodle-quiz-mps-evaluation', iconName: 'HelpCircle',
     description: 'Test your knowledge on key criteria for evaluating payroll software. (Moodle Quiz)',
     moduleAffiliation: 'mps', tags: ['quiz', 'software evaluation'],
   },
   {
-    id: 'res_mps_dl_matrix_eval', title: 'Downloadable: Software Evaluation Matrix Template', type: 'matrix',
-    url: '/resources/mps_software_eval_matrix.xlsx', iconName: 'Table2',
-    description: 'A template for evaluating and comparing payroll software vendors.',
-    moduleAffiliation: 'mps', tags: ['downloadable', 'software evaluation', 'matrix'],
+    id: 'res_mps_dl_compliance_checklist', title: 'Downloadable: Software Implementation Compliance Checklist', type: 'checklist',
+    url: '/resources/mps_compliance_checklist_software.pdf', iconName: 'CheckSquare',
+    description: 'A compliance checklist for software selection and implementation.',
+    moduleAffiliation: 'mps', tags: ['downloadable', 'compliance', 'checklist', 'software'],
   },
+  {
+    id: 'res_mps_dl_tax_worksheet', title: 'Downloadable: Tax Implications Worksheet for Software', type: 'worksheet',
+    url: '/resources/mps_tax_worksheet_software.xlsx', iconName: 'FileSpreadsheet',
+    description: 'Worksheet to consider tax setup during software evaluation.',
+    moduleAffiliation: 'mps', tags: ['downloadable', 'tax calculation', 'worksheet', 'software'],
+  },
+  {
+    id: 'res_mps_dl_audit_template_software', title: 'Downloadable: Software Setup Audit Template', type: 'template',
+    url: '/resources/mps_audit_template_software.docx', iconName: 'ClipboardCheck',
+    description: 'Template for auditing payroll software configuration.',
+    moduleAffiliation: 'mps', tags: ['downloadable', 'audit', 'template', 'software'],
+  },
+  {
+    id: 'res_mps_dl_software_eval_matrix', title: 'Downloadable: Software Evaluation Matrix Template', type: 'matrix',
+    url: '/resources/mps_software_eval_matrix_template.xlsx', iconName: 'Table2',
+    description: 'A comprehensive template for evaluating and comparing payroll software vendors.',
+    moduleAffiliation: 'mps', tags: ['downloadable', 'software evaluation', 'matrix', 'template'],
+  },
+
   // --- Module 3: Taxation & Compliance (mtc) ---
   {
     id: 'res_mtc_calc_fedstate', title: 'Federal vs State Tax Calculator', type: 'calculator',
@@ -181,18 +221,44 @@ export const placeholderResources: Resource[] = [
     description: 'Work through scenarios requiring various payroll tax calculations.',
     moduleAffiliation: 'mtc', tags: ['tax calculation', 'interactive scenario', 'compliance'],
   },
+  // Mandatory additions for Module 3
   {
-    id: 'res_mtc_quiz_generic', title: 'Knowledge Check: Federal Tax Forms', type: 'link',
+    id: 'res_mtc_quiz_taxforms', title: 'Knowledge Check: Federal Tax Forms', type: 'link',
     url: '#moodle-quiz-mtc-taxforms', iconName: 'HelpCircle',
     description: 'Quiz on common federal payroll tax forms. (Moodle Quiz)',
     moduleAffiliation: 'mtc', tags: ['quiz', 'tax forms', 'federal'],
   },
   {
-    id: 'res_mtc_dl_taxworksheet', title: 'Downloadable: Tax Calculation Worksheet', type: 'worksheet',
-    url: '/resources/mtc_tax_worksheet.xlsx', iconName: 'FileSpreadsheet',
-    description: 'A worksheet to practice payroll tax calculations.',
-    moduleAffiliation: 'mtc', tags: ['downloadable', 'tax calculation', 'worksheet'],
+    id: 'res_mtc_simulation_taxfiling', title: 'Process Simulation: Quarterly Tax Filing', type: 'simulation',
+    url: '#moodle-simulation-mtc-taxfiling', iconName: 'PlaySquare',
+    description: 'Simulate the steps involved in a quarterly payroll tax filing.',
+    moduleAffiliation: 'mtc', tags: ['simulation', 'tax filing', 'compliance'],
   },
+  {
+    id: 'res_mtc_dl_compliance_checklist_tax', title: 'Downloadable: Tax Compliance Checklist', type: 'checklist',
+    url: '/resources/mtc_tax_compliance_checklist.pdf', iconName: 'CheckSquare',
+    description: 'A checklist for ensuring tax compliance in payroll.',
+    moduleAffiliation: 'mtc', tags: ['downloadable', 'compliance', 'checklist', 'taxation'],
+  },
+  {
+    id: 'res_mtc_dl_tax_worksheet_advanced', title: 'Downloadable: Advanced Tax Calculation Worksheet', type: 'worksheet',
+    url: '/resources/mtc_tax_worksheet_advanced.xlsx', iconName: 'FileSpreadsheet',
+    description: 'A worksheet for practicing complex payroll tax calculations.',
+    moduleAffiliation: 'mtc', tags: ['downloadable', 'tax calculation', 'worksheet', 'advanced'],
+  },
+  {
+    id: 'res_mtc_dl_audit_template_tax', title: 'Downloadable: Tax Audit Preparation Template', type: 'template',
+    url: '/resources/mtc_audit_template_tax.docx', iconName: 'ClipboardCheck',
+    description: 'Template for preparing for a payroll tax audit.',
+    moduleAffiliation: 'mtc', tags: ['downloadable', 'audit', 'template', 'taxation'],
+  },
+  {
+    id: 'res_mtc_dl_software_eval_matrix_tax', title: 'Downloadable: Software Tax Feature Matrix', type: 'matrix',
+    url: '/resources/mtc_software_eval_matrix_tax.xlsx', iconName: 'Table2',
+    description: 'Matrix for evaluating tax compliance features in payroll software.',
+    moduleAffiliation: 'mtc', tags: ['downloadable', 'software evaluation', 'matrix', 'taxation'],
+  },
+
   // --- Module 4: Benefits & Deductions (mbd) ---
   {
     id: 'res_mbd_tool_preposttax', title: 'Pre-tax vs Post-tax Comparison Tool', type: 'matrix',
@@ -218,27 +284,47 @@ export const placeholderResources: Resource[] = [
     description: 'A tool for calculating employee Paid Time Off accruals based on different policies.',
     moduleAffiliation: 'mbd', tags: ['pto', 'calculator', 'accruals'],
   },
-  {
-    id: 'res_mbd_scenario_generic', title: 'Interactive Scenario: Handling Complex Deductions', type: 'interactive-scenario',
+  // Mandatory additions for Module 4
+   {
+    id: 'res_mbd_scenario_complex_deductions', title: 'Interactive Scenario: Handling Complex Deductions', type: 'interactive-scenario',
     url: '#moodle-scenario-mbd-deductions', iconName: 'MousePointerClick',
     description: 'Scenario focusing on calculating and processing complex employee deductions.',
     moduleAffiliation: 'mbd', tags: ['interactive scenario', 'deductions'],
   },
   {
-    id: 'res_mbd_quiz_generic', title: 'Knowledge Check: Benefit Types', type: 'link',
+    id: 'res_mbd_quiz_benefittypes', title: 'Knowledge Check: Benefit Types', type: 'link',
     url: '#moodle-quiz-mbd-benefittypes', iconName: 'HelpCircle',
     description: 'Quiz on different types of employee benefits. (Moodle Quiz)',
     moduleAffiliation: 'mbd', tags: ['quiz', 'benefits'],
   },
-   {
-    id: 'res_mbd_dl_compliance', title: 'Downloadable: Benefits Compliance Checklist', type: 'checklist',
+  {
+    id: 'res_mbd_dl_compliance_checklist_benefits', title: 'Downloadable: Benefits Compliance Checklist', type: 'checklist',
     url: '/resources/mbd_benefits_compliance_checklist.pdf', iconName: 'CheckSquare',
     description: 'Checklist for ensuring compliance in benefits administration.',
     moduleAffiliation: 'mbd', tags: ['downloadable', 'compliance', 'benefits', 'checklist'],
   },
+  {
+    id: 'res_mbd_dl_tax_worksheet_benefits', title: 'Downloadable: Tax Worksheet for Benefits', type: 'worksheet',
+    url: '/resources/mbd_tax_worksheet_benefits.xlsx', iconName: 'FileSpreadsheet',
+    description: 'Worksheet to understand tax implications of various benefits.',
+    moduleAffiliation: 'mbd', tags: ['downloadable', 'tax calculation', 'worksheet', 'benefits'],
+  },
+  {
+    id: 'res_mbd_dl_audit_template_benefits', title: 'Downloadable: Benefits Audit Template', type: 'template',
+    url: '/resources/mbd_audit_template_benefits.docx', iconName: 'ClipboardCheck',
+    description: 'Template for auditing benefits administration processes.',
+    moduleAffiliation: 'mbd', tags: ['downloadable', 'audit', 'template', 'benefits'],
+  },
+  {
+    id: 'res_mbd_dl_software_eval_matrix_benefits', title: 'Downloadable: Benefits Admin Software Matrix', type: 'matrix',
+    url: '/resources/mbd_software_eval_matrix_benefits.xlsx', iconName: 'Table2',
+    description: 'Matrix for evaluating benefits administration features in software.',
+    moduleAffiliation: 'mbd', tags: ['downloadable', 'software evaluation', 'matrix', 'benefits'],
+  },
+
   // --- Module 5: Auditing & Error Management (maem) ---
   {
-    id: 'res_maem_template_auditchecklist', title: 'Audit Checklist Generator (Template)', type: 'template',
+    id: 'res_maem_template_auditchecklist_generator', title: 'Audit Checklist Generator (Template)', type: 'template',
     url: '/resources/maem_audit_checklist_template.docx', iconName: 'ClipboardCheck',
     description: 'A template to help generate a customized payroll audit checklist.',
     moduleAffiliation: 'maem', tags: ['audit checklist', 'template', 'generator'],
@@ -257,46 +343,61 @@ export const placeholderResources: Resource[] = [
   },
   {
     id: 'res_maem_template_reconciliation', title: 'Reconciliation Templates', type: 'template',
-    url: '/resources/maem_reconciliation_templates.xlsx', iconName: 'FileSpreadsheet',
+    url: '/resources/maem_reconciliation_templates.xlsx', iconName: 'FileSpreadsheet', // Using spreadsheet icon for excel template
     description: 'Downloadable templates for payroll reconciliation processes.',
     moduleAffiliation: 'maem', tags: ['reconciliation', 'template', 'auditing'],
   },
+  // Mandatory additions for Module 5
   {
-    id: 'res_maem_quiz_generic', title: 'Knowledge Check: Audit Procedures', type: 'link',
+    id: 'res_maem_quiz_audit_procedures', title: 'Knowledge Check: Audit Procedures', type: 'link',
     url: '#moodle-quiz-maem-auditprocedures', iconName: 'HelpCircle',
     description: 'Quiz covering payroll audit procedures. (Moodle Quiz)',
     moduleAffiliation: 'maem', tags: ['quiz', 'auditing'],
   },
   {
-    id: 'res_maem_sim_generic', title: 'Process Simulation: Correcting a Payroll Error', type: 'simulation',
+    id: 'res_maem_simulation_error_correction', title: 'Process Simulation: Correcting a Payroll Error', type: 'simulation',
     url: '#moodle-simulation-maem-errorcorrection', iconName: 'PlaySquare',
     description: 'Simulate the steps involved in correcting a payroll error and reissuing payment.',
     moduleAffiliation: 'maem', tags: ['simulation', 'error correction'],
   },
   {
-    id: 'res_maem_dl_audit_prep_template', title: 'Downloadable: Audit Preparation Template', type: 'template',
-    url: '/resources/maem_audit_prep_template.docx', iconName: 'ClipboardCheck',
-    description: 'A comprehensive template for preparing for a payroll audit.',
-    moduleAffiliation: 'maem', tags: ['downloadable', 'audit', 'template'],
+    id: 'res_maem_dl_compliance_checklist_audit', title: 'Downloadable: Audit & Error Mgmt Compliance Checklist', type: 'checklist',
+    url: '/resources/maem_compliance_checklist_audit.pdf', iconName: 'CheckSquare',
+    description: 'A compliance checklist focused on auditing and error management.',
+    moduleAffiliation: 'maem', tags: ['downloadable', 'compliance', 'checklist', 'auditing'],
+  },
+  {
+    id: 'res_maem_dl_tax_worksheet_yearend', title: 'Downloadable: Year-End Tax Reconciliation Worksheet', type: 'worksheet',
+    url: '/resources/maem_tax_worksheet_yearend.xlsx', iconName: 'FileSpreadsheet',
+    description: 'Worksheet for year-end tax reconciliation tasks.',
+    moduleAffiliation: 'maem', tags: ['downloadable', 'tax calculation', 'worksheet', 'year-end'],
+  },
+  {
+    id: 'res_maem_dl_audit_template_full', title: 'Downloadable: Comprehensive Audit Template', type: 'template',
+    url: '/resources/maem_audit_template_full.docx', iconName: 'ClipboardCheck',
+    description: 'A comprehensive template for conducting payroll audits.',
+    moduleAffiliation: 'maem', tags: ['downloadable', 'audit', 'template', 'comprehensive'],
+  },
+  {
+    id: 'res_maem_dl_software_eval_matrix_reporting', title: 'Downloadable: Reporting Software Feature Matrix', type: 'matrix',
+    url: '/resources/maem_software_eval_matrix_reporting.xlsx', iconName: 'Table2',
+    description: 'Matrix for evaluating reporting and auditing features in payroll software.',
+    moduleAffiliation: 'maem', tags: ['downloadable', 'software evaluation', 'matrix', 'reporting'],
   },
   
-  // Adding some of the original general resources not tied to specific new modules, if they still make sense
-  // or re-purpose them for the new structure.
-  // Many original resources are now covered by module-specific ones.
-  // Let's ensure at least one of each general type is present overall if not per module.
-
+  // --- General Resources (Can be affiliated or kept general if preferred) ---
   {
     id: 'res_gen_ethics', title: 'Ethics in Payroll Management', type: 'document',
     url: '/resources/ethics-in-payroll.pdf', iconName: 'ShieldCheck',
     description: 'A document outlining ethical guidelines and best practices for payroll professionals.',
-    moduleAffiliation: 'mppf', // Good fit for fundamentals
+    moduleAffiliation: 'mppf', 
     tags: ['ethics', 'professionalism', 'compliance'],
   },
   {
     id: 'res_gen_statelaws', title: 'State Payroll Resources (DOL)', type: 'link',
     url: 'https://www.dol.gov/agencies/whd/state-data', iconName: 'Map',
     description: 'Links to Department of Labor resources for state-specific payroll laws.',
-    moduleAffiliation: 'mtc', // Good fit for tax & compliance
+    moduleAffiliation: 'mtc',
     tags: ['state laws', 'compliance', 'dol'],
   },
   {
