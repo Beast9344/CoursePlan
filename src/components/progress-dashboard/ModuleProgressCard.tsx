@@ -1,9 +1,11 @@
+
 import type { CourseModule } from '@/types';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, Zap, CircleSlash } from 'lucide-react'; // Zap for in-progress, CircleSlash for not-started
+import Link from 'next/link';
 
 interface ModuleProgressCardProps {
   module: CourseModule;
@@ -67,9 +69,13 @@ export function ModuleProgressCard({ module }: ModuleProgressCardProps) {
          )}
       </CardContent>
       <CardFooter>
-        <Button variant="outline" size="sm" className="w-full">
-          {module.status === 'completed' ? 'Review Module' : module.status === 'in-progress' ? 'Continue Module' : 'Start Module'}
-        </Button>
+        <Link href={`/module/${module.id}`} legacyBehavior passHref className="w-full">
+          <Button variant="outline" size="sm" className="w-full" asChild>
+            <a>
+              {module.status === 'completed' ? 'Review Module' : module.status === 'in-progress' ? 'Continue Module' : 'Start Module'}
+            </a>
+          </Button>
+        </Link>
       </CardFooter>
     </Card>
   );

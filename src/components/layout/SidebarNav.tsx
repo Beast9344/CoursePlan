@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -17,7 +18,7 @@ import {
   Settings,
   LifeBuoy,
   BotMessageSquare,
-  UserCircle, // Added UserCircle
+  UserCircle,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -26,7 +27,7 @@ const navItems = [
   { href: '/course-map', label: 'Course Map', icon: Network, tooltip: 'Interactive Course Map' },
   { href: '/module-summarizer', label: 'Summarizer', icon: BookText, tooltip: 'AI Module Summarizer' },
   { href: '/resource-library', label: 'Resources', icon: Library, tooltip: 'Resource Library' },
-  { href: '/profile', label: 'Profile', icon: UserCircle, tooltip: 'User Profile' }, // Added Profile link
+  { href: '/profile', label: 'Profile', icon: UserCircle, tooltip: 'User Profile' },
 ];
 
 export function SidebarNav() {
@@ -67,20 +68,24 @@ export function SidebarNav() {
       <SidebarFooter className="p-2 border-t">
         <SidebarMenu>
            <SidebarMenuItem>
-            <SidebarMenuButton asChild className="justify-start" tooltip={{ children: "Help", className: "capitalize" }}>
-              <Link href="#">
-                <LifeBuoy className="h-5 w-5" />
-                <span className="group-data-[collapsible=icon]:hidden">Help</span>
-              </Link>
-            </SidebarMenuButton>
+            <Link href="#" legacyBehavior passHref>
+              <SidebarMenuButton asChild className="justify-start" tooltip={{ children: "Help", className: "capitalize" }}>
+                <a>
+                  <LifeBuoy className="h-5 w-5" />
+                  <span className="group-data-[collapsible=icon]:hidden">Help</span>
+                </a>
+              </SidebarMenuButton>
+            </Link>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild className="justify-start" tooltip={{ children: "Settings", className: "capitalize" }}>
-              <Link href="#">
-                <Settings className="h-5 w-5" />
-                <span className="group-data-[collapsible=icon]:hidden">Settings</span>
-              </Link>
-            </SidebarMenuButton>
+            <Link href="#" legacyBehavior passHref>
+              <SidebarMenuButton asChild className="justify-start" tooltip={{ children: "Settings", className: "capitalize" }}>
+                <a>
+                  <Settings className="h-5 w-5" />
+                  <span className="group-data-[collapsible=icon]:hidden">Settings</span>
+                </a>
+              </SidebarMenuButton>
+            </Link>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>

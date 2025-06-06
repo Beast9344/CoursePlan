@@ -1,9 +1,11 @@
+
 "use client";
 
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 import { LogOut } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import { placeholderModules } from '@/lib/placeholder-data'; // Import placeholderModules
 
 function getPageTitle(pathname: string): string {
   switch (pathname) {
@@ -15,12 +17,13 @@ function getPageTitle(pathname: string): string {
       return 'Module Summarizer';
     case '/resource-library':
       return 'Resource Library';
-    case '/profile': // Added case for profile page
+    case '/profile':
       return 'User Profile';
     default:
       if (pathname.startsWith('/module/')) {
         const moduleId = pathname.split('/').pop();
-        return `Module ${moduleId}`;
+        const module = placeholderModules.find(m => m.id === moduleId);
+        return module ? module.title : `Module ${moduleId}`;
       }
       return 'Moodle Mentor';
   }
