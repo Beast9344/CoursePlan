@@ -1,12 +1,12 @@
 
 // src/app/module/[moduleId]/page.tsx
-
+import Image from 'next/image';
+import NextLink from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { placeholderModules, placeholderResources, resourceTypeDisplayNames, iconMap } from "@/lib/placeholder-data";
 import type { Resource } from '@/types';
-import { BookOpen, ExternalLink, Download, ArrowRight } from "lucide-react";
-import NextLink from 'next/link';
+import { BookOpen, ExternalLink, Download, ArrowRight, PlayCircle, FileQuestion } from "lucide-react";
 import type { LucideIcon } from 'lucide-react';
 
 interface ModulePageProps {
@@ -35,6 +35,10 @@ export default function ModulePage({ params }: ModulePageProps) {
   const moduleSpecificResources = placeholderResources.filter(
     resource => resource.moduleAffiliation === moduleId
   );
+
+  const moduleKnowledgeCheck = moduleSpecificResources.find(r => r.type === 'knowledge-check');
+  const quizUrl = moduleKnowledgeCheck ? moduleKnowledgeCheck.url : `#moodle-quiz-generic-${moduleId}`;
+
 
   return (
     <div className="space-y-8">
@@ -71,10 +75,36 @@ export default function ModulePage({ params }: ModulePageProps) {
             </div>
           </div>
           
+          {module.videoUrl && (
+            <div className="pt-6 border-t">
+              <h3 className="font-semibold text-xl mb-4 text-primary font-headline flex items-center">
+                <PlayCircle className="h-6 w-6 mr-2" />
+                Video Lecture
+              </h3>
+              <div className="aspect-video bg-muted rounded-lg overflow-hidden mb-4 relative shadow-md">
+                <NextLink href={module.videoUrl} target="_blank" rel="noopener noreferrer">
+                  <Image 
+                    src="https://placehold.co/600x338.png" 
+                    alt={`${module.title} Video Lecture Thumbnail`} 
+                    layout="fill"
+                    objectFit="cover"
+                    className="hover:opacity-90 transition-opacity"
+                    data-ai-hint="video lesson" 
+                  />
+                </NextLink>
+              </div>
+              <Button asChild variant="default" className="w-full sm:w-auto">
+                <NextLink href={module.videoUrl} target="_blank" rel="noopener noreferrer">
+                  Watch Video Lecture <ExternalLink className="ml-2 h-4 w-4" />
+                </NextLink>
+              </Button>
+            </div>
+          )}
+
           <div className="pt-6 border-t">
-            <h3 className="font-semibold text-xl mb-4 text-primary font-headline">Learning Content & Activities</h3>
+            <h3 className="font-semibold text-xl mb-4 text-primary font-headline">Supporting Resources & Activities</h3>
             <p className="text-sm text-muted-foreground mb-6">
-              The core learning materials for this module, such as instructional text, videos, and embedded interactive elements (e.g., from Articulate Storyline), would be presented here. Below are key resources and activities associated with this module.
+              Explore these materials to deepen your understanding and practice key skills for this module.
             </p>
             {moduleSpecificResources.length > 0 ? (
               <div className="space-y-4">
@@ -85,7 +115,7 @@ export default function ModulePage({ params }: ModulePageProps) {
                   
                   let actionText = 'View Resource';
                   if (isExternal) {
-                       if ((resource.type === 'link' || resource.type === 'interactive-scenario') && (resource.title.toLowerCase().includes('quiz') || resource.title.toLowerCase().includes('check'))) actionText = 'Take Quiz / Check';
+                       if ((resource.type === 'link' || resource.type === 'interactive-scenario' || resource.type === 'knowledge-check') && (resource.title.toLowerCase().includes('quiz') || resource.title.toLowerCase().includes('check'))) actionText = 'Take Quiz / Check';
                        else if (resource.type === 'video') actionText = 'Watch Video';
                        else if (resource.type === 'interactive-scenario') actionText = 'Start Scenario';
                        else if (resource.type === 'simulation') actionText = 'Run Simulation';
@@ -120,10 +150,26 @@ export default function ModulePage({ params }: ModulePageProps) {
               <p className="text-sm text-muted-foreground text-center py-4">No specific resources or activities listed for this module yet.</p>
             )}
           </div>
+
+          <div className="pt-6 border-t">
+            <h3 className="font-semibold text-xl mb-4 text-primary font-headline flex items-center">
+                <FileQuestion className="h-6 w-6 mr-2" />
+                Module Quiz
+            </h3>
+            <p className="text-sm text-muted-foreground mb-4">
+              Test your understanding of this module's concepts. An 80% pass mark is typically required for course progression and to earn achievements.
+            </p>
+            <Button asChild variant="default" className="w-full sm:w-auto">
+              <NextLink href={quizUrl} target="_blank" rel="noopener noreferrer">
+                Take Module Quiz on Moodle <ExternalLink className="ml-2 h-4 w-4" />
+              </NextLink>
+            </Button>
+          </div>
+
         </CardContent>
         <CardFooter className="bg-card p-6 border-t">
             <p className="text-xs text-muted-foreground text-center w-full">
-                Module assessment (quizzes, practical exercises) and features like discussion forums or certificate issuance would be managed within the Moodle LMS.
+                Module assessment (quizzes, practical exercises), final exams, and the issuance of digital badges or certificates are managed within the Moodle LMS. Moodle Mentor helps you track progress and access learning materials.
             </p>
         </CardFooter>
       </Card>

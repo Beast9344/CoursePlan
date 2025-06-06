@@ -38,7 +38,7 @@ export const iconMap: { [key: string]: LucideIcon } = {
   FileSpreadsheet, // For worksheets
   MousePointerClick, // For interactive scenarios
   PlaySquare, // For simulations
-  HelpCircle, // For quizzes/knowledge checks (link type)
+  HelpCircle, // For quizzes/knowledge checks (link type) / General Knowledge Check
   Map, // For state resources
   ShieldCheck, // For ethics documents
   GitFork, // For decision trees / branching scenarios
@@ -64,7 +64,7 @@ export const resourceTypeDisplayNames: Record<Resource['type'], string> = {
   'interactive-scenario': 'Interactive Scenario',
   simulation: 'Process Simulation',
   workflow: 'Workflow / Process Map',
-  'case-study': 'Case Study',
+  'case-study': 'Case Study Document',
   'knowledge-check': 'Knowledge Check / Quiz',
 };
 
@@ -83,6 +83,7 @@ export const placeholderModules: CourseModule[] = [
       'Evaluate and compare timekeeping systems.',
       'Identify key stages in the payroll workflow.',
     ],
+    videoUrl: '#moodle-video-lecture-mppf',
   },
   {
     id: 'mps', // Module 2: Payroll Software & Systems
@@ -98,6 +99,7 @@ export const placeholderModules: CourseModule[] = [
       'Simulate a software implementation timeline.',
       'Analyze case studies of system selection processes.',
     ],
+    videoUrl: '#moodle-video-lecture-mps',
   },
   {
     id: 'mtc', // Module 3: Taxation & Compliance
@@ -112,6 +114,7 @@ export const placeholderModules: CourseModule[] = [
       'Understand FICA, FUTA, and SUTA through interactive diagrams.',
       'Perform scenario-based tax calculations.',
     ],
+    videoUrl: '#moodle-video-lecture-mtc',
   },
   {
     id: 'mbd', // Module 4: Benefits & Deductions
@@ -126,6 +129,7 @@ export const placeholderModules: CourseModule[] = [
       'Understand and process wage garnishments according to legal requirements.',
       'Calculate Paid Time Off (PTO) accruals.',
     ],
+    videoUrl: '#moodle-video-lecture-mbd',
   },
   {
     id: 'maem', // Module 5: Auditing & Error Management
@@ -140,6 +144,7 @@ export const placeholderModules: CourseModule[] = [
       'Manage the year-end payroll reporting timeline effectively.',
       'Utilize templates for payroll reconciliation.',
     ],
+    videoUrl: '#moodle-video-lecture-maem',
   },
 ];
 
@@ -163,7 +168,6 @@ export const placeholderResources: Resource[] = [
     description: 'A template to compare features of different timekeeping systems.',
     moduleAffiliation: 'mppf', tags: ['timekeeping', 'comparison', 'tool', 'matrix'],
   },
-  // Mandatory additions for Module 1
   {
     id: 'res_mppf_scenario_fraudcase', title: 'Interactive Scenario: Payroll Fraud Case Study', type: 'interactive-scenario',
     url: '#moodle-scenario-mppf-fraud', iconName: 'MousePointerClick',
@@ -209,13 +213,13 @@ export const placeholderResources: Resource[] = [
 
   // --- Module 2: Payroll Software & Systems (mps) ---
   {
-    id: 'res_mps_tree_softwarecat', title: 'Software Category Decision Tree', type: 'interactive-scenario', // Changed from diagram to interactive-scenario
-    url: '#moodle-decisiontree-mps-softwarecat', iconName: 'GitFork', // GitFork is good for decision trees
+    id: 'res_mps_tree_softwarecat', title: 'Software Category Decision Tree', type: 'interactive-scenario',
+    url: '#moodle-decisiontree-mps-softwarecat', iconName: 'GitFork',
     description: 'An interactive decision tree to help select the right category of payroll software (Articulate Scenario).',
     moduleAffiliation: 'mps', tags: ['software selection', 'decision tree', 'interactive', 'articulate'],
   },
   {
-    id: 'res_mps_matrix_vendor', title: 'Vendor Comparison Matrix (Interactive)', type: 'matrix', // Kept as matrix, implies interactive tool
+    id: 'res_mps_matrix_vendor', title: 'Vendor Comparison Matrix (Interactive)', type: 'matrix',
     url: '#moodle-interactivematrix-mps-vendor', iconName: 'Table2',
     description: 'Interactively compare different payroll software vendors based on various criteria. (Moodle H5P or embedded tool)',
     moduleAffiliation: 'mps', tags: ['vendor comparison', 'matrix', 'interactive', 'tool'],
@@ -232,7 +236,6 @@ export const placeholderResources: Resource[] = [
     description: 'A detailed case study analyzing a company\'s payroll system selection process.',
     moduleAffiliation: 'mps', tags: ['case study', 'system selection', 'software'],
   },
-  // Mandatory additions for Module 2
    {
     id: 'res_mps_scenario_vendor_negotiation', title: 'Interactive Scenario: Vendor Negotiation Tactics', type: 'interactive-scenario',
     url: '#moodle-scenario-mps-negotiation', iconName: 'MousePointerClick',
@@ -272,30 +275,29 @@ export const placeholderResources: Resource[] = [
 
   // --- Module 3: Taxation & Compliance (mtc) ---
   {
-    id: 'res_mtc_calc_fedstate', title: 'Federal vs State Tax Calculator (Tool)', type: 'calculator', // Clarified as a tool
+    id: 'res_mtc_calc_fedstate', title: 'Federal vs State Tax Calculator (Tool)', type: 'calculator',
     url: '#moodle-tool-mtc-taxcalculator', iconName: 'Calculator',
     description: 'A tool to help understand differences in federal and state tax calculations. (External or Moodle Tool)',
     moduleAffiliation: 'mtc', tags: ['tax calculator', 'federal tax', 'state tax', 'tool'],
   },
   {
     id: 'res_mtc_template_calendar', title: 'Compliance Calendar Template', type: 'template',
-    url: '/resources/mtc_compliance_calendar.ics', iconName: 'CalendarDays', // .ics for calendar import
+    url: '/resources/mtc_compliance_calendar.ics', iconName: 'CalendarDays',
     description: 'A downloadable template for tracking key payroll compliance deadlines (.ics format).',
     moduleAffiliation: 'mtc', tags: ['compliance calendar', 'template', 'deadlines', 'ics'],
   },
   {
     id: 'res_mtc_diagram_tax', title: 'FICA/FUTA/SUTA Interactive Diagrams', type: 'diagram',
-    url: '#moodle-interactivediagram-mtc-tax', iconName: 'Network', // Network for diagrams
+    url: '#moodle-interactivediagram-mtc-tax', iconName: 'Network',
     description: 'Interactive diagrams explaining FICA, FUTA, and SUTA contributions. (Moodle H5P or Articulate)',
     moduleAffiliation: 'mtc', tags: ['tax diagrams', 'fica', 'futa', 'suta', 'interactive'],
   },
   {
-    id: 'res_mtc_scenario_taxcalc', title: 'Scenario-Based Tax Calculations (Interactive)', type: 'interactive-scenario', // Already interactive scenario
+    id: 'res_mtc_scenario_taxcalc', title: 'Scenario-Based Tax Calculations (Interactive)', type: 'interactive-scenario',
     url: '#moodle-scenario-mtc-taxcalc', iconName: 'MousePointerClick',
     description: 'Work through real-world scenarios requiring various payroll tax calculations (Articulate Scenario).',
     moduleAffiliation: 'mtc', tags: ['tax calculation', 'interactive scenario', 'compliance', 'articulate'],
   },
-  // Mandatory additions for Module 3
   {
     id: 'res_mtc_knowledge_check_taxforms', title: 'Knowledge Check: Federal & State Tax Forms', type: 'knowledge-check',
     url: '#moodle-quiz-mtc-taxforms', iconName: 'HelpCircle',
@@ -335,7 +337,7 @@ export const placeholderResources: Resource[] = [
 
   // --- Module 4: Benefits & Deductions (mbd) ---
   {
-    id: 'res_mbd_tool_preposttax', title: 'Pre-tax vs Post-tax Deduction Comparison Tool', type: 'matrix', // Matrix is suitable for comparison
+    id: 'res_mbd_tool_preposttax', title: 'Pre-tax vs Post-tax Deduction Comparison Tool', type: 'matrix',
     url: '#moodle-tool-mbd-preposttax', iconName: 'Table2',
     description: 'A tool/matrix to compare the impact of pre-tax and post-tax deductions. (Moodle Tool or Spreadsheet)',
     moduleAffiliation: 'mbd', tags: ['benefits', 'deductions', 'comparison tool', 'matrix'],
@@ -358,7 +360,6 @@ export const placeholderResources: Resource[] = [
     description: 'A tool for calculating employee Paid Time Off accruals based on different policies. (Moodle Tool or Spreadsheet)',
     moduleAffiliation: 'mbd', tags: ['pto', 'calculator', 'accruals', 'tool'],
   },
-  // Mandatory additions for Module 4
    {
     id: 'res_mbd_scenario_complex_deductions', title: 'Interactive Scenario: Handling Complex Deductions', type: 'interactive-scenario',
     url: '#moodle-scenario-mbd-deductions', iconName: 'MousePointerClick',
@@ -398,19 +399,19 @@ export const placeholderResources: Resource[] = [
 
   // --- Module 5: Auditing & Error Management (maem) ---
   {
-    id: 'res_maem_template_auditchecklist_generator', title: 'Audit Checklist Generator (Template)', type: 'template', // Kept as template
+    id: 'res_maem_template_auditchecklist_generator', title: 'Audit Checklist Generator (Template)', type: 'template',
     url: '/resources/maem_audit_checklist_template_generator.docx', iconName: 'ClipboardCheck',
     description: 'A dynamic template to help generate a customized payroll audit checklist based on specific needs.',
     moduleAffiliation: 'maem', tags: ['audit checklist', 'template', 'generator', 'customizable'],
   },
   {
-    id: 'res_maem_scenario_errorid', title: 'Error Identification & Correction Scenarios (Interactive)', type: 'interactive-scenario', // Already interactive
+    id: 'res_maem_scenario_errorid', title: 'Error Identification & Correction Scenarios (Interactive)', type: 'interactive-scenario',
     url: '#moodle-scenario-maem-errorid', iconName: 'MousePointerClick',
     description: 'Interactive scenarios to practice identifying common payroll errors and determining correction steps (Articulate Scenario).',
     moduleAffiliation: 'maem', tags: ['error identification', 'error correction', 'interactive scenario', 'auditing', 'articulate'],
   },
   {
-    id: 'res_maem_timeline_yearend', title: 'Year-End Reporting Timeline & Checklist', type: 'timeline', // Combined timeline and checklist aspect
+    id: 'res_maem_timeline_yearend', title: 'Year-End Reporting Timeline & Checklist', type: 'timeline',
     url: '/resources/maem_yearend_timeline_checklist.pdf', iconName: 'GanttChartSquare',
     description: 'A visual timeline and checklist for managing year-end payroll reporting tasks.',
     moduleAffiliation: 'maem', tags: ['year-end reporting', 'timeline', 'checklist', 'compliance'],
@@ -421,7 +422,6 @@ export const placeholderResources: Resource[] = [
     description: 'Downloadable Excel templates for various payroll reconciliation processes (e.g., bank, GL).',
     moduleAffiliation: 'maem', tags: ['reconciliation', 'template', 'auditing', 'excel'],
   },
-  // Mandatory additions for Module 5
   {
     id: 'res_maem_knowledge_check_audit_procedures', title: 'Knowledge Check: Payroll Audit Procedures', type: 'knowledge-check',
     url: '#moodle-quiz-maem-auditprocedures', iconName: 'HelpCircle',
@@ -459,25 +459,23 @@ export const placeholderResources: Resource[] = [
     moduleAffiliation: 'maem', tags: ['downloadable', 'software evaluation', 'matrix', 'reporting', 'auditing'],
   },
   
-  // --- General Resources (Can be affiliated or kept general if preferred) ---
+  // --- General Resources ---
   {
     id: 'res_gen_ethics', title: 'Ethics in Payroll Management Guide', type: 'document',
     url: '/resources/ethics-in-payroll-guide.pdf', iconName: 'ShieldCheck',
     description: 'A comprehensive document outlining ethical guidelines, dilemmas, and best practices for payroll professionals.',
-    moduleAffiliation: 'mppf', 
     tags: ['ethics', 'professionalism', 'compliance', 'guidelines'],
   },
   {
     id: 'res_gen_statelaws', title: 'State Payroll Law Resource Hub (DOL Links)', type: 'link',
     url: 'https://www.dol.gov/agencies/whd/state-data', iconName: 'Map',
     description: 'Direct links to Department of Labor resources for state-specific payroll laws and regulations.',
-    moduleAffiliation: 'mtc',
     tags: ['state laws', 'compliance', 'dol', 'official resource'],
   },
   {
     id: 'res_gen_irspub15', title: 'IRS Publication 15 (Circular E), Employer\'s Tax Guide', type: 'pdf',
     url: 'https://www.irs.gov/pub/irs-pdf/p15.pdf', iconName: 'FileText',
     description: 'The official IRS guide for employers on federal tax responsibilities, including withholding and reporting.',
-    moduleAffiliation: 'mtc', tags: ['external', 'irs', 'tax guide', 'federal tax', 'official document'],
+    tags: ['external', 'irs', 'tax guide', 'federal tax', 'official document'],
   },
 ];

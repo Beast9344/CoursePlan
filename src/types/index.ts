@@ -11,7 +11,7 @@ export interface CourseModule {
   status: ModuleStatus;
   progress: number; // 0-100
   objectives?: string[];
-  videoUrl?: string;
+  videoUrl?: string; // Added for video lecture
   scormUrl?: string;
 }
 
@@ -29,8 +29,9 @@ export type ResourceType =
   | 'worksheet'
   | 'interactive-scenario'
   | 'simulation'
-  | 'workflow' // Added for Garnishment processing workflow
-  | 'case-study'; // Added for case studies, will map to document icon
+  | 'workflow'
+  | 'case-study'
+  | 'knowledge-check'; // Added for quizzes/knowledge checks
 
 export interface Resource {
   id: string;
@@ -42,4 +43,3 @@ export interface Resource {
   tags?: string[]; 
   moduleAffiliation?: string; 
 }
-
