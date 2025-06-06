@@ -1,3 +1,4 @@
+
 import type { CourseModule } from '@/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -33,7 +34,7 @@ export function ProgressDashboardView({ modules, overallProgress, userName = "Le
       </Card>
 
       <div>
-        <h2 className="text-xl font-semibold mb-4 font-headline">Modules</h2>
+        <h2 className="text-xl font-semibold mb-4 font-headline">Payroll Fundamentals Certification Course</h2>
         {modules.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {modules.map((module) => (
